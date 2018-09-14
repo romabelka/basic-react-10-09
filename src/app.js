@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import Select from 'react-select'
+import DayPicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
@@ -20,6 +22,7 @@ class App extends Component {
           value={this.state.openItem}
           onChange={this.handleSelect}
         />
+        <DayPicker />
         <ArticleList articles={articles} ref={this.setArticleListRef} />
         <ArticlesChart articles={articles} />
       </div>
@@ -38,11 +41,11 @@ class App extends Component {
   setArticleListRef = (ref) => {
     console.log('---', ref, findDOMNode(ref))
     /*
-        setTimeout(() => {
-            ref.toggleOpenItem(articles[0].id)
-            ref.forceUpdate()
-        }, 1000)
-*/
+            setTimeout(() => {
+                ref.toggleOpenItem(articles[0].id)
+                ref.forceUpdate()
+            }, 1000)
+    */
   }
 }
 
