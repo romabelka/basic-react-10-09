@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments'
 
 class Article extends PureComponent {
   render() {
@@ -16,18 +17,11 @@ class Article extends PureComponent {
           <section>
             {article.text}
             <br />
-            Comments:
-            <ul>{this.getComments(article)}</ul>
+            <Comments article={article} />
           </section>
         )}
       </div>
     )
-  }
-
-  getComments = (article) => {
-    return article.comments.map((comment) => (
-      <li key={comment.id}>{comment.text}</li>
-    ))
   }
 
   setTitleRef = (titleRef) => console.log(titleRef)
