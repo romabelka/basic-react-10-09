@@ -6,6 +6,9 @@ import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
 import UserForm from './components/user-form'
 
+import DayPicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
+
 class App extends Component {
   state = {
     openItem: null
@@ -15,6 +18,7 @@ class App extends Component {
     return (
       <div>
         <UserForm />
+        <DayPicker />
         <Select
           options={this.options}
           value={this.state.openItem}
