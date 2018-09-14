@@ -12,9 +12,22 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
-        {isOpen && <section>{article.text}</section>}
+        {isOpen && (
+          <section>
+            {article.text}
+            <br />
+            Comments:
+            <ul>{this.getComments(article)}</ul>
+          </section>
+        )}
       </div>
     )
+  }
+
+  getComments = (article) => {
+    return article.comments.map((comment) => (
+      <li key={comment.id}>{comment.text}</li>
+    ))
   }
 
   setTitleRef = (titleRef) => console.log(titleRef)
