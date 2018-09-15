@@ -1,37 +1,37 @@
 import React, { Component } from 'react'
 import Comment from './comment'
+import toggle from '../decorators/toggle'
 
 class CommentsList extends Component {
-  state = {
-    areCommentsOpen: false
-  }
-
-  toggleComments = () => {
-    this.setState({
-      areCommentsOpen: !this.state.areCommentsOpen
-    })
-  }
-
   render() {
-    const { comments } = this.props
+    const { comments, isItemOpen, toggleItem } = this.props
+    console.log(comments)
+
+    if (!comments) {
+      console.log('no-comments')
+    }
 
     return (
       <div className="comments">
-        <button onClick={this.toggleComments}>
-          {this.state.areCommentsOpen ? 'close comments' : 'open comments'}
+        <button onClick={toggleItem}>
+          {isItemOpen ? 'close comments' : 'open comments'}
         </button>
 
-        {this.state.areCommentsOpen ? (
-          <React.Fragment>
-            <h4 className="comments__title">Комментарии:</h4>
-            <ul className="comments__list">
-              {comments.map((comment) => (
-                <li key={comment.id}>
-                  <Comment user={comment.user} text={comment.text} />
-                </li>
-              ))}
-            </ul>
-          </React.Fragment>
+        {isItemOpen ? (
+          comments ? (
+            <React.Fragment>
+              <h4 className="comments__title">Комментарии:</h4>
+              <ul className="comments__list">
+                {comments.map((comment) => (
+                  <li key={comment.id}>
+                    <Comment user={comment.user} text={comment.text} />
+                  </li>
+                ))}
+              </ul>
+            </React.Fragment>
+          ) : (
+            <p>No comments yet</p>
+          )
         ) : (
           ''
         )}
@@ -40,4 +40,6 @@ class CommentsList extends Component {
   }
 }
 
-export default CommentsList
+const CommentsListWithToggleItem = toggle(CommentsList)
+
+export default CommentsListWithToggleItem
