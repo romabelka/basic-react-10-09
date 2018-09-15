@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
+import collapse from '../decorators/collapse'
 
 class Comments extends Component {
-  state = {
-    isOpen: false
-  }
-
   render() {
-    const { comments } = this.props
+    const { collapseItem, isCollapsed, comments } = this.props
 
     if (comments) {
       return (
         <div>
-          <button onClick={this.handleBtnClick}>
-            {this.state.isOpen ? 'Hide' : 'Show'} comments
+          <button onClick={collapseItem}>
+            {isCollapsed ? 'Show' : 'Hide'} comments
           </button>
-          {this.state.isOpen &&
+          {!isCollapsed &&
             comments.map((comment) => (
               <div key={comment.id}>
                 <h4>{comment.user}</h4>
@@ -27,11 +24,6 @@ class Comments extends Component {
       return <div>No comments yet</div>
     }
   }
-
-  handleBtnClick = () =>
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
 }
 
-export default Comments
+export default collapse(Comments)
