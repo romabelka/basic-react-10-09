@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import Select from 'react-select'
-import DayPicker from 'react-day-picker'
 import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
 import DateRangePicker from './components/date-range-picker'
 import articles from './fixtures'
 import UserForm from './components/user-form'
-
-import 'react-day-picker/lib/style.css'
 
 class App extends Component {
   state = {
