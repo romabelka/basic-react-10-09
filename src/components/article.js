@@ -13,8 +13,12 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
-        {isOpen && <section>{article.text}</section>}
-        <Comments comments={article.comments} />
+        {isOpen && (
+          <div>
+            <section>{article.text}</section>
+            <Comments comments={article.comments} />
+          </div>
+        )}
       </div>
     )
   }
