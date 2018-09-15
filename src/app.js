@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import Select from 'react-select'
+import DatePicker from './components/date-picker'
 import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
@@ -20,6 +21,7 @@ class App extends Component {
           value={this.state.openItem}
           onChange={this.handleSelect}
         />
+        <DatePicker />
         <ArticleList articles={articles} ref={this.setArticleListRef} />
         <ArticlesChart articles={articles} />
       </div>
