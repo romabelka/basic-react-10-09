@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments'
 
 class Article extends PureComponent {
   render() {
@@ -13,6 +14,7 @@ class Article extends PureComponent {
           </button>
         </div>
         {isOpen && <section>{article.text}</section>}
+        <Comments comments={article.comments} />
       </div>
     )
   }
