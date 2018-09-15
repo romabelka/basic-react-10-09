@@ -1,23 +1,19 @@
-//decorator === HOC === Higher Order Component
 import React from 'react'
 
 export default (OriginalComponent) =>
   class DecoratedComponent extends React.Component {
     state = {
-      openItemId: null
+      isCollapsed: true
     }
 
-    toggleOpenItem = (openItemId) =>
-      this.setState({
-        openItemId: this.state.openItemId === openItemId ? null : openItemId
-      })
+    collapseItem = () => this.setState({ isCollapsed: !this.state.isCollapsed })
 
     render() {
       return (
         <OriginalComponent
           {...this.props}
           {...this.state}
-          toggleOpenItem={this.toggleOpenItem}
+          collapseItem={this.collapseItem}
         />
       )
     }
