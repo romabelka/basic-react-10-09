@@ -11,10 +11,6 @@ export default (OriginalComponent) =>
       this.state.openItemId === openItemId
         ? this.setState({ openItemId: null })
         : this.setState({ openItemId })
-    //    {
-    //      console.log(this.state.openItemId === openItemId);
-    //      this.setState({ openItemId })
-    //    }
 
     render() {
       return (
