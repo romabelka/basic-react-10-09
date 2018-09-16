@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments-list'
 
 class Article extends PureComponent {
   render() {
@@ -12,7 +13,12 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
-        {isOpen && <section>{article.text}</section>}
+        {isOpen && (
+          <div>
+            <section>{article.text}</section>{' '}
+            <Comments comments={article.comments} />{' '}
+          </div>
+        )}
       </div>
     )
   }
