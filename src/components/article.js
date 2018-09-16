@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 class Article extends PureComponent {
   render() {
     console.log('---', 'rendering')
+
     const { article, isOpen } = this.props
     return (
       <div>
@@ -19,7 +20,8 @@ class Article extends PureComponent {
 
   setTitleRef = (titleRef) => console.log(titleRef)
 
-  handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
+  handleBtnClick = () =>
+    this.props.toggleOpen(this.props.isOpen ? null : this.props.article.id)
 }
 
 export default Article
