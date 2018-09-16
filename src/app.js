@@ -38,7 +38,7 @@ class App extends Component {
   handleSelect = (openItem) => this.setState({ openItem })
 
   setArticleListRef = (ref) => {
-    console.log('---', ref, findDOMNode(ref))
+    //console.log('---', ref, findDOMNode(ref))
     /*
         setTimeout(() => {
             ref.toggleOpenItem(articles[0].id)
