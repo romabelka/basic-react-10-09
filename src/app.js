@@ -5,6 +5,7 @@ import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
 import UserForm from './components/user-form'
+import DateRangeSelect from './components/date-range-select'
 
 class App extends Component {
   state = {
@@ -14,6 +15,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <DateRangeSelect />
         <UserForm />
         <Select
           options={this.options}
