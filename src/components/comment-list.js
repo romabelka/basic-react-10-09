@@ -11,7 +11,7 @@ class CommentList extends Component {
     return (
       <div>
         {comments && (
-          <button onClick={this.handleBtnClickComments.bind(this)}>
+          <button onClick={this.handleBtnClickComments}>
             {this.state.isOpenComments ? 'close comments' : 'open comments'}
           </button>
         )}
