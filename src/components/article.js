@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments'
+import accordion from '../decorators/accordion'
 
 class Article extends PureComponent {
   render() {
-    console.log('---', 'rendering')
-    const { article, isOpen } = this.props
+    const { article, isOpen, toggleOpenItem, openItemId } = this.props
+
     return (
       <div>
         <div>
@@ -12,7 +14,16 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
-        {isOpen && <section>{article.text}</section>}
+        {isOpen && (
+          <div>
+            <section>{article.text}</section>
+            <Comments
+              comments={article.comments}
+              isOpen={openItemId === article.id}
+              toggleOpen={() => toggleOpenItem(article.id)}
+            />
+          </div>
+        )}
       </div>
     )
   }
@@ -22,4 +33,4 @@ class Article extends PureComponent {
   handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
 }
 
-export default Article
+export default accordion(Article)
