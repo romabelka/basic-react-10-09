@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments/comments'
 
 class Article extends PureComponent {
   render() {
     console.log('---', 'rendering')
-    const { article, isOpen } = this.props
+    const { article, isOpen, isOpenComments, toggleComments } = this.props
     return (
       <div>
         <div>
@@ -12,7 +13,17 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
-        {isOpen && <section>{article.text}</section>}
+        {isOpen && (
+          <section>
+            {article.text}
+
+            <Comments
+              isOpen={isOpenComments}
+              toggleComments={toggleComments}
+              article={article}
+            />
+          </section>
+        )}
       </div>
     )
   }
