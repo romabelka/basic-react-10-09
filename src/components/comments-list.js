@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import Comment from './comment'
+import accordion from '../decorators/accordion'
 
 class CommentsList extends Component {
   render() {
-    console.log(this.props)
-    const { comments, commentsOpened } = this.props
+    const { toggleOpenItem, openItemId, comments, commentsOpened } = this.props
     if (!comments) {
       return ''
     }
     const commentsElements = comments.map((comment) => {
       return (
         <li key={comment.id}>
-          <Comment comment={comment} />
+          <Comment
+            comment={comment}
+            isOpen={openItemId === comment.id}
+            toggleOpen={toggleOpenItem}
+          />
         </li>
       )
     })
@@ -28,4 +32,6 @@ class CommentsList extends Component {
   handleBtnClick = () => this.props.toggleComments()
 }
 
-export default CommentsList
+const CommentsListWithAccordion = accordion(CommentsList)
+
+export default CommentsListWithAccordion
