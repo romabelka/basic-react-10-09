@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments'
 
 class Article extends PureComponent {
   render() {
-    console.log('---', 'rendering')
-    const { article, isOpen } = this.props
+    const { isCommentOpen, toggleOpenComments, article, isOpen } = this.props
+
     return (
       <div>
         <div>
@@ -12,14 +13,30 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
-        {isOpen && <section>{article.text}</section>}
+        {isOpen && (
+          <section>
+            {article.text}
+            {article.comments ? (
+              <Comments
+                comments={article.comments}
+                isCommentOpen={isCommentOpen}
+                toggleOpenComments={toggleOpenComments}
+                isItemOpen={isOpen}
+              />
+            ) : (
+              ''
+            )}
+          </section>
+        )}
       </div>
     )
   }
 
   setTitleRef = (titleRef) => console.log(titleRef)
 
-  handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
+  handleBtnClick = () => {
+    this.props.toggleOpen(this.props.article.id)
+  }
 }
 
 export default Article

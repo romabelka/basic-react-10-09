@@ -4,6 +4,7 @@ import Select from 'react-select'
 import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
+import Picker from './components/picker'
 import UserForm from './components/user-form'
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Picker />
         <UserForm />
         <Select
           options={this.options}
