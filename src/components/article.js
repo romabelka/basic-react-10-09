@@ -26,7 +26,11 @@ class Article extends PureComponent {
 
   setTitleRef = (titleRef) => console.log(titleRef)
 
-  handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
+  handleBtnClick = () => {
+    this.props.openItemId === this.props.article.id
+      ? this.props.toggleOpen(null)
+      : this.props.toggleOpen(this.props.article.id)
+  }
 }
 
 export default Article

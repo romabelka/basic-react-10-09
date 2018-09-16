@@ -14,6 +14,7 @@ class ArticleList extends Component {
         <Article
           article={article}
           isOpen={openItemId === article.id}
+          openItemId={openItemId}
           toggleOpen={toggleOpenItem}
         />
       </li>

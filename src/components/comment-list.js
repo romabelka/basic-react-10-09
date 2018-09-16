@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
 import Comment from './comment'
+import openClose from '../decorators/open-close.js'
 
 class CommentList extends Component {
-  state = {
-    isOpenComments: false
+  constructor(props) {
+    super(props)
   }
   render() {
-    const { comments } = this.props
+    const { comments, isOpen, toggleClick } = this.props
 
     return (
       <div>
+        <hr />
         {comments && (
-          <button onClick={this.handleBtnClickComments}>
-            {this.state.isOpenComments ? 'close comments' : 'open comments'}
+          <button onClick={toggleClick}>
+            {isOpen ? 'close comments' : 'open comments'}
           </button>
         )}
         {comments &&
-          this.state.isOpenComments &&
+          isOpen &&
           comments.map((item) => (
             <Comment
               key={item.id}
@@ -28,12 +30,6 @@ class CommentList extends Component {
       </div>
     )
   }
-
-  handleBtnClickComments = () => {
-    this.setState({
-      isOpenComments: !this.setState.isOpenComments
-    })
-  }
 }
 
-export default CommentList
+export default openClose(CommentList)
