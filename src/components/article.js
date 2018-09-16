@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import CommentList from './article-list'
+import CommentList from './comment-list'
 
 class Article extends PureComponent {
   render() {
@@ -16,7 +16,7 @@ class Article extends PureComponent {
         {isOpen && (
           <div>
             <div>{article.text}</div>
-            <CommentList comment={article.comments} />
+            <CommentList comments={article.comments} />
           </div>
         )}
       </div>
@@ -25,7 +25,7 @@ class Article extends PureComponent {
 
   setTitleRef = (titleRef) => console.log(titleRef)
 
-  handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
+  handleBtnClick = () => this.props.toggleOpenById(this.props.article.id)
 }
 
 export default Article

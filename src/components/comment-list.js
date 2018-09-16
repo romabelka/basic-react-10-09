@@ -3,10 +3,19 @@ import Comment from './comment'
 import accordion from '../decorators/accordion'
 
 class CommentList extends Component {
+  state = {
+    isOpen: false
+  }
+
   render() {
+    console.log('CommentList')
+    this.state.isOpen = this.props.stateItem
     return (
       <div>
-        <ul>{this.body}</ul>
+        <button onClick={this.handleBtnClick}>
+          {this.state.isOpen ? 'close Comment' : 'open Comment'}
+        </button>
+        {this.state.isOpen && <ul>{this.body}</ul>}
       </div>
     )
   }
@@ -19,6 +28,8 @@ class CommentList extends Component {
       </li>
     ))
   }
+
+  handleBtnClick = () => this.props.toggleOpenItem(this.state.isOpen)
 }
 
-export default CommentList
+export default accordion(CommentList)

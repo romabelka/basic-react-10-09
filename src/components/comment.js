@@ -5,7 +5,7 @@ class Comment extends PureComponent {
     const { comment } = this.props
     return (
       <div>
-        <h6>{comment.user}</h6>
+        <h5>{comment.user}</h5>
         <div>{comment.text}</div>
       </div>
     )
