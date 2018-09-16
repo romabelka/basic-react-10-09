@@ -1,23 +1,21 @@
 import React, { PureComponent } from 'react'
 import './comments.css'
 import CommentsList from './comments-list'
+import toggleOpen from '../../decorators/toggle-open'
 
-export default class Comments extends PureComponent {
+class Comments extends PureComponent {
   render() {
-    let { isOpen, article } = this.props
+    let { isOpen, toggleOpen, article } = this.props
     let { comments } = article
     return (
       <div className="comments">
-        <button
-          className="comments__toggle-btn"
-          onClick={this.handleBtnCommentsClick}
-        >
+        <button className="comments__toggle-btn" onClick={toggleOpen}>
           {isOpen ? 'close' : 'open'}
         </button>
         {isOpen && <CommentsList comments={comments} />}
       </div>
     )
   }
-  handleBtnCommentsClick = () =>
-    this.props.toggleComments(this.props.article.id)
 }
+
+export default toggleOpen(Comments)

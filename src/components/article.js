@@ -9,14 +9,13 @@ class Article extends PureComponent {
       <div>
         <div>
           <h3 ref={this.setTitleRef}>{article.title}</h3>
-          <button onClick={this.handleBtnClick}>
+          <button onClick={this.toggleOpenWithId}>
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
         {isOpen && (
           <section>
             {article.text}
-
             <Comments
               isOpen={isOpenComments}
               toggleComments={toggleComments}
@@ -30,7 +29,7 @@ class Article extends PureComponent {
 
   setTitleRef = (titleRef) => console.log(titleRef)
 
-  handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
+  toggleOpenWithId = () => this.props.toggleOpen(this.props.article.id)
 }
 
 export default Article
