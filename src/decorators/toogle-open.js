@@ -4,13 +4,11 @@ import React from 'react'
 export default (OriginalComponent) =>
   class DecoratedComponent extends React.Component {
     state = {
-      openItemId: null
+      isOpenContent: false
     }
 
-    toggleOpenItem = (openItemId) => {
-      openItemId = openItemId !== this.state.openItemId ? openItemId : null
-
-      this.setState({ openItemId })
+    switchOpenComponent = () => {
+      this.setState({ isOpenContent: !this.state.isOpenContent })
     }
 
     render() {
@@ -18,7 +16,7 @@ export default (OriginalComponent) =>
         <OriginalComponent
           {...this.props}
           {...this.state}
-          toggleOpenItem={this.toggleOpenItem}
+          switchOpenComponent={this.switchOpenComponent}
         />
       )
     }
