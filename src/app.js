@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
+import DatePicker from './components/date-picker'
 import Select from 'react-select'
 import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
@@ -14,6 +15,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <DatePicker />
         <UserForm />
         <Select
           options={this.options}
