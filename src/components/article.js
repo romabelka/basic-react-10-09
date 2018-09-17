@@ -1,34 +1,9 @@
 import React, { PureComponent } from 'react'
-import Comment from './article-comment'
+import CommentList from './comment-list'
 
 class Article extends PureComponent {
-  state = {
-    commentsOpen: false,
-    comments: []
-  }
-
-  componentDidMount() {
-    this.setState({
-      comments: this.props.article.comments || []
-    })
-  }
-
-  toggleCommentsVisibility = () => {
-    this.setState({
-      commentsOpen: !this.state.commentsOpen
-    })
-  }
-
   render() {
     const { article, isOpen } = this.props
-    const { commentsOpen, comments } = this.state
-
-    const commentsMarkup =
-      isOpen &&
-      commentsOpen &&
-      comments.map((comment) => (
-        <Comment key={comment.id} user={comment.user} text={comment.text} />
-      ))
 
     return (
       <div>
@@ -41,12 +16,9 @@ class Article extends PureComponent {
         {isOpen && (
           <section>
             <p>{article.text}</p>
-            <button onClick={this.toggleCommentsVisibility.bind(this)}>
-              {commentsOpen ? 'Hide' : 'Show'} comments
-            </button>
+            <CommentList comments={article.comments} />
           </section>
         )}
-        {isOpen && commentsOpen && <section>{commentsMarkup}</section>}
       </div>
     )
   }
