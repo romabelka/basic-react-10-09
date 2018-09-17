@@ -3,16 +3,6 @@ import Article from './article'
 import accordion from '../decorators/accordion'
 
 class ArticleList extends Component {
-  state = {
-    comments: []
-  }
-
-  componentDidMount() {
-    this.setState({
-      comments: this.props.comments || []
-    })
-  }
-
   render() {
     return <ul>{this.body}</ul>
   }

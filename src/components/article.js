@@ -24,7 +24,7 @@ class Article extends PureComponent {
   }
 
   setTitleRef = (titleRef) => {
-    // console.log(titleRef)
+    console.log(titleRef)
   }
 
   handleBtnClick = () => {

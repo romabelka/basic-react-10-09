@@ -38,9 +38,8 @@ class App extends Component {
             onDayClick={this.handleDayClick.bind(this, 'dateTo')}
           />
 
-          <span
+          <div
             style={{
-              display: 'block',
               padding: '10px',
               textAlign: 'center',
               fontSize: '18px'
@@ -49,7 +48,7 @@ class App extends Component {
             {this.state.dateFrom && this.state.dateTo
               ? `${this.state.dateFrom.toLocaleDateString()} - ${this.state.dateTo.toLocaleDateString()}`
               : 'Please select date range'}
-          </span>
+          </div>
         </div>
 
         <UserForm />
@@ -82,7 +81,7 @@ class App extends Component {
   handleSelect = (openItem) => this.setState({ openItem })
 
   setArticleListRef = (ref) => {
-    // console.log('---', ref, findDOMNode(ref))
+    console.log('---', ref, findDOMNode(ref))
     /*
 				setTimeout(() => {
 						ref.toggleOpenItem(articles[0].id)

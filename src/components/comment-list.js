@@ -3,22 +3,12 @@ import Comment from './article-comment'
 import commentListSwitchable from '../decorators/commentListSwitchable'
 
 class CommentList extends Component {
-  state = {
-    comments: []
-  }
-
-  componentDidMount() {
-    this.setState({
-      comments: this.props.comments || []
-    })
-  }
-
   render() {
     return <ul>{this.comments}</ul>
   }
 
   get comments() {
-    const { comments } = this.state
+    const { comments } = this.props
 
     return comments.map((comment) => (
       <Comment key={comment.id} user={comment.user} text={comment.text} />
