@@ -28,12 +28,6 @@ class Article extends PureComponent {
   }
 
   handleBtnClick = () => {
-    if (this.props.isOpen && this.state.commentsOpen) {
-      this.setState({
-        commentsOpen: false
-      })
-    }
-
     this.props.toggleOpen(this.props.article.id)
   }
 }

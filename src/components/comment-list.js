@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Comment from './article-comment'
-// import accordion from '../decorators/accordion'
+import commentListSwitchable from '../decorators/commentListSwitchable'
 
 class CommentList extends Component {
   state = {
-    isOpen: false,
     comments: []
   }
 
@@ -14,26 +13,12 @@ class CommentList extends Component {
     })
   }
 
-  toggleOpenComments = () =>
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
-
   render() {
-    const { isOpen } = this.state
-
-    return (
-      <section>
-        <button onClick={this.toggleOpenComments.bind(this)}>
-          {isOpen ? 'Hide' : 'Show'} comments
-        </button>
-        <ul>{isOpen && this.comments}</ul>
-      </section>
-    )
+    return <ul>{this.comments}</ul>
   }
 
   get comments() {
-    const { comments } = this.props
+    const { comments } = this.state
 
     return comments.map((comment) => (
       <Comment key={comment.id} user={comment.user} text={comment.text} />
@@ -41,6 +26,6 @@ class CommentList extends Component {
   }
 }
 
-// const CommentListWithAccordion = accordionCommentList(CommentList)
+const CommentListSwitchable = commentListSwitchable(CommentList)
 
-export default CommentList
+export default CommentListSwitchable
