@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import Select from 'react-select'
+import DayPicker, { DateUtils } from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 import ArticleList from './components/article-list'
 import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
@@ -8,8 +10,11 @@ import UserForm from './components/user-form'
 
 class App extends Component {
   state = {
-    openItem: null
+    openItem: null,
+    selectedDay: undefined
   }
+
+  handleDayClick = (day) => this.setState({ selectedDay: day })
 
   render() {
     return (
@@ -20,6 +25,15 @@ class App extends Component {
           value={this.state.openItem}
           onChange={this.handleSelect}
         />
+        <DayPicker
+          onDayClick={this.handleDayClick}
+          selectedDays={this.state.selectedDay}
+        />
+        {this.state.selectedDay ? (
+          <p>You clicked {this.state.selectedDay.toLocaleDateString()}</p>
+        ) : (
+          <p>Please select a day.</p>
+        )}
         <ArticleList articles={articles} ref={this.setArticleListRef} />
         <ArticlesChart articles={articles} />
       </div>
@@ -38,11 +52,11 @@ class App extends Component {
   setArticleListRef = (ref) => {
     console.log('---', ref, findDOMNode(ref))
     /*
-        setTimeout(() => {
-            ref.toggleOpenItem(articles[0].id)
-            ref.forceUpdate()
-        }, 1000)
-*/
+                setTimeout(() => {
+                    ref.toggleOpenItem(articles[0].id)
+                    ref.forceUpdate()
+                }, 1000)
+        */
   }
 }
 
