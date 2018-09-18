@@ -10,7 +10,11 @@ function Comment({ comment }) {
 }
 
 Comment.propTypes = {
-  comment: PropTypes.object.isRequired
+  comment: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
+    text: PropTypes.string
+  }).isRequired
 }
 
 export default Comment

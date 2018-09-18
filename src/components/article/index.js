@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
-import CommentList from '../comment-list'
+import CommentList from '../comment-list/'
 import './style.css'
 
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      text: PropTypes.string
+      text: PropTypes.string,
+      date: PropTypes.string,
+      comments: PropTypes.array
     }).isRequired,
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func.isRequired
