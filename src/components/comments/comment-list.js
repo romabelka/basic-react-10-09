@@ -4,7 +4,7 @@ import toggleOpen from '../../decorators/toggleOpen'
 import CSSTransition from 'react-addons-css-transition-group'
 import './style.css'
 
-class CommentList extends Component {
+export class CommentList extends Component {
   static defaultProps = {
     comments: []
   }
@@ -14,7 +14,9 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button onClick={toggleOpen}>{text}</button>
+        <button onClick={toggleOpen} className="test__comment-list--btn">
+          {text}
+        </button>
         <CSSTransition
           transitionName="comments"
           transitionEnterTimeout={500}
@@ -31,9 +33,9 @@ class CommentList extends Component {
     if (!isOpen) return null
 
     const body = comments.length ? (
-      <ul>
+      <ul className="test__comment-list--body">
         {comments.map((comment) => (
-          <li key={comment.id}>
+          <li key={comment.id} className="test__comment-list--item">
             <Comment comment={comment} />
           </li>
         ))}
@@ -44,6 +46,13 @@ class CommentList extends Component {
 
     return <div>{body}</div>
   }
+
+  componentDidMount() {
+    const { fetchData } = this.props
+    fetchData && fetchData()
+  }
 }
 
-export default toggleOpen(CommentList)
+const ToggleCommentList = toggleOpen(CommentList)
+
+export default ToggleCommentList
