@@ -4,6 +4,7 @@ import Enzyme, { mount, render, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import ArticleListWithAccordion, { ArticleList } from './article-list'
 import articles from '../fixtures'
+import ToggleArticle from './article'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -35,28 +36,18 @@ describe('ArticleList', () => {
     expect(container.find('.test__article--body').length).toEqual(1)
   })
 
-  it('should close an opened article on click', () => {
+  it('should close an opened article on click', (done) => {
     const container = mount(
-      <ArticleListWithAccordion
-        articles={articles}
-        openItemId={articles[0].id}
-      />
+      <ToggleArticle isOpen={true} article={articles[0]} onClose={done} />
     )
 
-    const cssTransition = container
-      .find('.test__article--body')
-      .at(0)
-      .parent()
-    const timeout = cssTransition.prop('leaveTimeout')
-    console.log(timeout)
-    // async???
+    //article should be open before clicking
+    expect(container.find('.test__article--body').length).toEqual(1)
 
     container
       .find('.test__article--btn')
       .at(0)
       .simulate('click')
-
-    expect(container.find('.test__article--body').length).toEqual(0)
   })
 
   it('should trigger data fetching on mount', (done) => {
