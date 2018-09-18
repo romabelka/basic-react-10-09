@@ -35,6 +35,30 @@ describe('ArticleList', () => {
     expect(container.find('.test__article--body').length).toEqual(1)
   })
 
+  it('should close an opened article on click', () => {
+    const container = mount(
+      <ArticleListWithAccordion
+        articles={articles}
+        openItemId={articles[0].id}
+      />
+    )
+
+    const cssTransition = container
+      .find('.test__article--body')
+      .at(0)
+      .parent()
+    const timeout = cssTransition.prop('leaveTimeout')
+    console.log(timeout)
+    // async???
+
+    container
+      .find('.test__article--btn')
+      .at(0)
+      .simulate('click')
+
+    expect(container.find('.test__article--body').length).toEqual(0)
+  })
+
   it('should trigger data fetching on mount', (done) => {
     mount(
       <ArticleListWithAccordion

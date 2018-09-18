@@ -11,7 +11,8 @@ export class CommentList extends Component {
   }
 
   static propTypes = {
-    comments: PropTypes.arrayOf(PropTypes.object)
+    comments: PropTypes.arrayOf(PropTypes.object),
+    isOpen: PropTypes.bool
   }
 
   render() {
