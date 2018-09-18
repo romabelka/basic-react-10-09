@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Comment from './comment'
 import accordion from '../decorators/accordion'
 
-class CommentSList extends Component {
+class CommentsList extends Component {
   state = {
     isOpen: false
   }
@@ -33,6 +33,6 @@ class CommentSList extends Component {
   handleBtnClick = () => this.props.toggleOpenComments(this.state.isOpen)
 }
 
-const CommentListWithAccordion = accordion(CommentSList)
+const CommentListWithAccordion = accordion(CommentsList)
 
 export default CommentListWithAccordion
