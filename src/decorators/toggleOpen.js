@@ -2,8 +2,11 @@ import React from 'react'
 
 export default (OriginalComponent) =>
   class ToggleOpen extends React.Component {
-    state = {
-      isOpen: false
+    constructor(props) {
+      super(props)
+      this.state = {
+        isOpen: props.isOpen
+      }
     }
 
     toggleOpen = () =>

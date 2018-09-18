@@ -1,17 +1,19 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
-import CommentList from '../comment-list'
+import CommentList from '../comments/comment-list'
 import './style.css'
+import toggleOpen from '../../decorators/toggleOpen'
 
-class Article extends PureComponent {
+export class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
       title: PropTypes.string.isRequired,
       text: PropTypes.string
     }).isRequired,
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func.isRequired
+    toggleOpen: PropTypes.func.isRequired,
+    onClose: PropTypes.func
   }
 
   state = {
@@ -52,7 +54,12 @@ class Article extends PureComponent {
 
   get body() {
     const { isOpen, article } = this.props
-    if (!isOpen) return null
+    if (!isOpen) {
+      if (this.props.onClose) {
+        this.props.onClose()
+      }
+      return null
+    }
     if (this.state.hasError) return <div>Some Error in this article</div>
 
     return (
@@ -64,4 +71,6 @@ class Article extends PureComponent {
   }
 }
 
-export default Article
+const ToggleArticle = toggleOpen(Article)
+
+export default ToggleArticle

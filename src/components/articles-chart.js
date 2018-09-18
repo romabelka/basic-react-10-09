@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 //import d3 from 'd3'
 
 class ArticlesChart extends Component {
+  static propTypes = {}
+
   render() {
     return <div ref={this.setContainerRef} />
   }
