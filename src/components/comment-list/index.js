@@ -4,7 +4,7 @@ import Comment from '../comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
-class CommentList extends Component {
+export class CommentList extends Component {
   static defaultProps = {
     comments: []
   }
@@ -13,10 +13,12 @@ class CommentList extends Component {
     const { isOpen, toggleOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
-      <div>
-        <button onClick={toggleOpen}>{text}</button>
+      <div className="test__comments-list">
+        <button onClick={toggleOpen} className="test__comment-list--btn">
+          {text}
+        </button>
         <CSSTransition
-          transitionName="article"
+          transitionName="comments"
           transitionAppear
           transitionEnterTimeout={500}
           transitionAppearTimeout={1000}
@@ -33,7 +35,7 @@ class CommentList extends Component {
     if (!isOpen) return null
 
     const body = comments.length ? (
-      <ul>
+      <ul className="test__comment-list--body">
         {comments.map((comment) => (
           <li key={comment.id}>
             <Comment comment={comment} />
@@ -41,7 +43,7 @@ class CommentList extends Component {
         ))}
       </ul>
     ) : (
-      <h3>No comments yet</h3>
+      <h3 className="test__comment-list--body">No comments yet</h3>
     )
 
     return <div>{body}</div>
