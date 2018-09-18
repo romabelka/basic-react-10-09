@@ -1,0 +1,35 @@
+.comment-list-enter {
+    opacity: 0.01;
+    max-height: 0;
+    transition: max-height 500ms ease-in;
+}
+
+.comment-list-enter.comment-list-enter-active {
+    opacity: 1;
+    max-height: 1000px;
+    transition: opacity 500ms ease-in, max-height 500ms ease-in;
+}
+
+.comment-list-appear {
+    opacity: 0.01;
+    max-height: 0;
+    transition: max-height 500ms ease-in;
+}
+
+.comment-list-appear.comment-list-appear-active {
+    opacity: 1;
+    max-height: 1000px;
+    transition: opacity 1000ms ease-in, max-height 1000ms ease-in;
+}
+
+.comment-list-leave {
+    opacity: 1;
+    max-height: 1000px;
+    transition: max-height 500ms ease-in;
+}
+
+.comment-list-leave.comment-list-leave-active {
+    //opacity: 0.01;
+    max-height: 0;
+    transition: opacity 300ms ease-in, max-height 300ms ease-in;
+}
