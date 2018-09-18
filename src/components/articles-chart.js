@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 //import d3 from 'd3'
+import PropTypes from 'prop-types'
 
 class ArticlesChart extends Component {
   render() {
@@ -23,6 +24,10 @@ class ArticlesChart extends Component {
   componentWillUnmount() {
     //remove all d3 junk
   }
+}
+
+ArticlesChart.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default ArticlesChart

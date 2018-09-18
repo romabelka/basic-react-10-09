@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Index from './article'
 import accordion from '../decorators/accordion'
+import PropTypes from 'prop-types'
 
 export class ArticleList extends Component {
   render() {
@@ -24,6 +25,12 @@ export class ArticleList extends Component {
     const { fetchData } = this.props
     fetchData && fetchData()
   }
+}
+
+ArticleList.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  toggleOpenItem: PropTypes.func.isRequired,
+  openItemId: PropTypes.string
 }
 
 const ArticleListWithAccordion = accordion(ArticleList)
