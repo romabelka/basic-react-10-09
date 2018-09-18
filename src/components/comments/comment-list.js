@@ -12,7 +12,8 @@ export class CommentList extends Component {
 
   static propTypes = {
     comments: PropTypes.arrayOf(PropTypes.object),
-    isOpen: PropTypes.bool
+    isOpen: PropTypes.bool,
+    toggleOpen: PropTypes.func
   }
 
   render() {
