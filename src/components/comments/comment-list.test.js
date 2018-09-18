@@ -18,6 +18,14 @@ describe('CommentList', () => {
     )
   })
 
+  it('should render empty comment list', () => {
+    const comments = articles[articles.length - 1].comments
+    const container = shallow(<CommentList comments={comments} isOpen={true} />)
+
+    expect(container.find('.test__comment-list--item').length).toEqual(0)
+    expect(container.find('.test__comment-list--empty').length).toEqual(1)
+  })
+
   it('should render closed comments by default', () => {
     const container = render(
       <ToggleCommentList comments={articles[0].comments} />

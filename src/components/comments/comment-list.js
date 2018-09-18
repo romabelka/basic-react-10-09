@@ -41,7 +41,7 @@ export class CommentList extends Component {
         ))}
       </ul>
     ) : (
-      <h3>No comments yet</h3>
+      <h3 className="test__comment-list--empty">No comments yet</h3>
     )
 
     return <div>{body}</div>
