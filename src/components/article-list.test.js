@@ -7,7 +7,7 @@ import articles from '../fixtures'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('CommentList quality articles', () => {
-  it('Shoud render comment list', () => {
+  it('Shoud render comment-list list', () => {
     const conteiner = shallow(<ArticleList articles={articles} />)
     expect(conteiner.find('.test__article-list--item').length).toEqual(
       articles.length
