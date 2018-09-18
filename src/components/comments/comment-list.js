@@ -3,10 +3,15 @@ import Comment from './comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import CSSTransition from 'react-addons-css-transition-group'
 import './style.css'
+import PropTypes from 'prop-types'
 
 export class CommentList extends Component {
   static defaultProps = {
     comments: []
+  }
+
+  static propTypes = {
+    comments: PropTypes.arrayOf(PropTypes.object)
   }
 
   render() {
