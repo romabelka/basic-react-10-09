@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 //import d3 from 'd3'
 
 class ArticlesChart extends Component {
+  static propTypes = {
+    articles: PropTypes.array.isRequired
+  }
+
   render() {
     return <div ref={this.setContainerRef} />
   }
