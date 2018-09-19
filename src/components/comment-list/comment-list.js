@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Comment from '../comment'
+import Comment from './comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import CSSTransition from 'react-addons-css-transition-group'
 import './style.css'
@@ -14,7 +14,9 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button onClick={toggleOpen}>{text}</button>
+        <button onClick={toggleOpen} className="test__comment-list--btn">
+          {text}
+        </button>
         <CSSTransition
           transitionName="comments"
           transitionAppear
@@ -44,7 +46,7 @@ class CommentList extends Component {
       <h3>No comments yet</h3>
     )
 
-    return <div>{body}</div>
+    return <div className="test__comment-list--body">{body}</div>
   }
 }
 

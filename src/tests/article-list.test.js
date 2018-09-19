@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { mount, render, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import ArticleListWithAccordion, { ArticleList } from './article-list'
+import ArticleListWithAccordion, {
+  ArticleList
+} from '../components/article-list'
 import articles from '../fixtures'
 
 Enzyme.configure({ adapter: new Adapter() })
