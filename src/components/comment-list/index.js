@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import Comment from './comment'
-import toggleOpen from '../decorators/toggleOpen'
+import Comment from '../comment'
+import toggleOpen from '../../decorators/toggleOpen'
+import './style.css'
+import accordion from "../../decorators/accordion";
+import {ArticleList} from "../article-list";
 
-class CommentList extends Component {
+export class CommentList extends Component {
   static defaultProps = {
     comments: []
   }
@@ -38,4 +41,6 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+const toggleOpenCommentList = toggleOpen(CommentList)
+
+export default toggleOpenCommentList
