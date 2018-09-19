@@ -1,0 +1,18 @@
+
+.comment-list-enter {
+  opacity: 0;
+}
+
+.comment-list-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.comment-list-leave {
+  opacity: 1;
+}
+
+.comment-list-leave-active {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
