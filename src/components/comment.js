@@ -11,9 +11,9 @@ function Comment({ comment }) {
 
 Comment.propTypes = {
   comment: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    user: PropTypes.string,
-    text: PropTypes.string.isRequired
+      id: PropTypes.string.isRequired,
+      user: PropTypes.string,
+      text: PropTypes.string.isRequired
   }).isRequired
 }
 

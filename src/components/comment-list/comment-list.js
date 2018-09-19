@@ -10,9 +10,9 @@ export class CommentList extends Component {
     comments: []
   }
   static propTypes = {
-    comments: PropTypes.arrayOf(PropTypes.object),
-    isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func.isRequired
+      comments: PropTypes.arrayOf(PropTypes.object),
+      isOpen: PropTypes.bool,
+      toggleOpen: PropTypes.func.isRequired
   }
 
   render() {
@@ -20,16 +20,13 @@ export class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button onClick={toggleOpen} className="test__comments-btn">
-          {text}
-        </button>
-        <CSSTransition
-          transitionName="comments"
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={400}
-        >
-          {this.getBody()}
-        </CSSTransition>
+        <button onClick={toggleOpen} className="test__comments-btn">{text}</button>
+          <CSSTransition
+              transitionName="comments"
+              transitionEnterTimeout={600}
+              transitionLeaveTimeout={400}
+          >{this.getBody()}
+          </CSSTransition>
       </div>
     )
   }
@@ -52,10 +49,10 @@ export class CommentList extends Component {
 
     return <div>{body}</div>
   }
-  componentDidMount() {
-    const { fetchData } = this.props
-    fetchData && fetchData()
-  }
+    componentDidMount() {
+        const { fetchData } = this.props
+        fetchData && fetchData()
+    }
 }
 
 const ToggleOpenCommentList = toggleOpen(CommentList)
