@@ -2,7 +2,7 @@
 import React from 'react'
 
 export default (OriginalComponent) =>
-  class DecoratedComponent extends React.Component {
+  class DecoratedComponent extends React.PureComponent {
     state = {
       openItemId: null
     }
