@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
-import CommentList from '../comment-list'
+import CommentList from '../commentList/'
 import './style.css'
 
 class Article extends PureComponent {
@@ -28,7 +28,7 @@ class Article extends PureComponent {
   render() {
     const { article, isOpen } = this.props
     return (
-      <div>
+      <div className="test__article--item">
         <h3>
           {article.title}
           <button onClick={this.handleClick} className="test__article--btn">

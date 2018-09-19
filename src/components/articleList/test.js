@@ -1,8 +1,8 @@
 import React from 'react'
 import Enzyme, { mount, render, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import ArticleListWithAccordion, { ArticleList } from './article-list'
-import articles from '../fixtures'
+import ArticleListWithAccordion, { ArticleList } from './index'
+import articles from '../../fixtures'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -34,13 +34,23 @@ describe('ArticleList', () => {
     expect(container.find('.test__article--body').length).toEqual(1)
   })
 
-  it('should trigger data fetching on mount', (done) => {
-    mount(
+  it('should close an article on second click', (done) => {
+    const container = mount(
       <ArticleListWithAccordion
-        articles={[]}
-        toggleOpenItem={() => {}}
-        fetchData={done}
+        articles={articles}
+        openItemId={articles[0].id}
       />
     )
+
+    container
+      .find('.test__article--btn')
+      .at(0)
+      .simulate('click')
+
+    setTimeout(function() {
+      container.update()
+      expect(container.find('.test__article--body').length).toEqual(0)
+      done()
+    }, 2000)
   })
 })
