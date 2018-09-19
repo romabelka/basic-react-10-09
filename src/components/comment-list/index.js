@@ -14,7 +14,9 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button onClick={toggleOpen}>{text}</button>
+        <button onClick={toggleOpen} className="t-comment-list__button">
+          {text}
+        </button>
         <CSSTransition
           transitionName="comment-list"
           transitionEnterTimeout={300}
@@ -30,17 +32,18 @@ class CommentList extends Component {
     const { comments, isOpen } = this.props
     if (!isOpen) return null
 
-    const body = comments.length ? (
-      <ul>
-        {comments.map((comment) => (
-          <li key={comment.id}>
-            <Comment comment={comment} />
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <h3>No comments yet</h3>
-    )
+    const body =
+      comments && comments.length ? (
+        <ul>
+          {comments.map((comment) => (
+            <li key={comment.id} className="t-comment-list__item">
+              <Comment comment={comment} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <h3 className="t-comment-list__title">No comments yet</h3>
+      )
 
     return <div>{body}</div>
   }
