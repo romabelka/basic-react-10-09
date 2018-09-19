@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import Comment from './comment'
-import toggleOpen from '../decorators/toggleOpen'
+import toggleOpen from '../../decorators/toggleOpen'
+import PropTypes from 'prop-types'
+import './style.css'
+import CSSTransition from 'react-addons-css-transition-group'
 
-class CommentList extends Component {
+class Index extends Component {
   static defaultProps = {
     comments: []
   }
@@ -13,7 +16,13 @@ class CommentList extends Component {
     return (
       <div>
         <button onClick={toggleOpen}>{text}</button>
-        {this.getBody()}
+        <CSSTransition
+          transitionName="comments"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {this.getBody()}
+        </CSSTransition>
       </div>
     )
   }
@@ -25,7 +34,7 @@ class CommentList extends Component {
     const body = comments.length ? (
       <ul>
         {comments.map((comment) => (
-          <li key={comment.id}>
+          <li key={comment.id} className="test_comment_item">
             <Comment comment={comment} />
           </li>
         ))}
@@ -38,4 +47,10 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+Index.propTypes = {
+  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  toggleOpen: PropTypes.func.isRequired
+}
+
+export default toggleOpen(Index)

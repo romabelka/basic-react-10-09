@@ -6,41 +6,31 @@ import articles from '../fixtures'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-describe('ArticleList', () => {
-  it('should render article list', () => {
-    const container = shallow(
-      <ArticleList articles={articles} toggleOpenItem={() => {}} />
-    )
-
-    expect(container.find('.test__article-list--item').length).toEqual(
+describe('CommentList quality articles', () => {
+  it('Shoud render comment-list list', () => {
+    const conteiner = shallow(<ArticleList articles={articles} />)
+    expect(conteiner.find('.test__article-list--item').length).toEqual(
       articles.length
     )
   })
 
-  it('should render closed articles by default', () => {
-    const container = render(<ArticleListWithAccordion articles={articles} />)
-
-    expect(container.find('.test__article--body').length).toEqual(0)
+  it('Shoud article close', () => {
+    const conteiner = render(<ArticleListWithAccordion articles={articles} />)
+    expect(conteiner.find('.test__article--body').length).toEqual(0)
   })
 
-  it('should open an article on click', () => {
-    const container = mount(<ArticleListWithAccordion articles={articles} />)
+  it('shoud open an article by click', () => {
+    const conteiner = mount(<ArticleListWithAccordion articles={articles} />)
 
-    container
+    conteiner
       .find('.test__article--btn')
       .at(0)
       .simulate('click')
 
-    expect(container.find('.test__article--body').length).toEqual(1)
+    expect(conteiner.find('.test__article--body').length).toEqual(1)
   })
 
-  it('should trigger data fetching on mount', (done) => {
-    mount(
-      <ArticleListWithAccordion
-        articles={[]}
-        toggleOpenItem={() => {}}
-        fetchData={done}
-      />
-    )
+  it('shoud come data', (data) => {
+    mount(<ArticleListWithAccordion articles={[]} fetchData={data} />)
   })
 })
