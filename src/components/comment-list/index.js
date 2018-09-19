@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import CSSTransition from 'react-addons-css-transition-group'
 import Comment from './comment'
-import toggleOpen from '../decorators/toggleOpen'
+import toggleOpen from '../../decorators/toggleOpen'
+import './style.css'
 
 class CommentList extends Component {
   static defaultProps = {
@@ -13,12 +15,20 @@ class CommentList extends Component {
     return (
       <div>
         <button onClick={toggleOpen}>{text}</button>
-        {this.getBody()}
+        <CSSTransition
+          transitionName="comments"
+          transitionAppear
+          transitionEnterTimeout={500}
+          transitionAppearTimeout={1000}
+          transitionLeaveTimeout={300}
+        >
+          {this.body}
+        </CSSTransition>
       </div>
     )
   }
 
-  getBody() {
+  get body() {
     const { comments, isOpen } = this.props
     if (!isOpen) return null
 
