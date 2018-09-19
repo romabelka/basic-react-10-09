@@ -1,8 +1,13 @@
 //decorator === HOC === Higher Order Component
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default (OriginalComponent) =>
   class DecoratedComponent extends React.Component {
+    static propTypes = {
+      openItemId: PropTypes.string
+    }
+
     state = {
       openItemId: null
     }

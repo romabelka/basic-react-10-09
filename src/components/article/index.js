@@ -10,7 +10,7 @@ class Article extends PureComponent {
       title: PropTypes.string.isRequired,
       text: PropTypes.string
     }).isRequired,
-    isOpen: PropTypes.bool,
+    isOpen: PropTypes.bool.isRequired,
     toggleOpen: PropTypes.func.isRequired
   }
 
