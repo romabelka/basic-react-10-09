@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
 import toggleOpen from '../../decorators/toggleOpen'
@@ -7,6 +8,12 @@ import './style.css'
 export class CommentList extends Component {
   static defaultProps = {
     comments: []
+  }
+
+  static propTypes = {
+    comments: PropTypes.array,
+    isOpen: PropTypes.bool.isRequired,
+    toggleOpen: PropTypes.func
   }
 
   render() {
