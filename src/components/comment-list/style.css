@@ -1,0 +1,26 @@
+.comment__list-enter {
+    opacity: 0.01;
+}
+
+.comment__list-enter.comment__list-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.comment__list-appear {
+    opacity: 0.01;
+}
+
+.comment__list-appear.comment__list-appear-active {
+    opacity: 1;
+    transition: opacity 1000ms ease-in;
+}
+
+.comment__list-leave {
+    opacity: 1;
+}
+
+.comment__list-leave.comment__list-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}
