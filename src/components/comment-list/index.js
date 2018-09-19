@@ -4,12 +4,13 @@ import Comment from '../comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import CSSTransition from 'react-addons-css-transition-group'
 import './style.css'
+import { ArticleList } from '../article-list'
 
-class CommentList extends Component {
+export class CommentList extends Component {
   static propTypes = {
     comments: PropTypes.array,
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func.isRequired
+    toggleOpen: PropTypes.func
   }
 
   static defaultProps = {
@@ -21,7 +22,9 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button onClick={toggleOpen}>{text}</button>
+        <button onClick={toggleOpen} className="test__comment-list--btn">
+          {text}
+        </button>
         <CSSTransition
           transitionName="comment-list"
           transitionAppear
@@ -40,9 +43,9 @@ class CommentList extends Component {
     if (!isOpen) return null
 
     const body = comments.length ? (
-      <ul>
+      <ul className="test__comment--ul">
         {comments.map((comment) => (
-          <li key={comment.id}>
+          <li key={comment.id} className="test__comments-list--item">
             <Comment comment={comment} />
           </li>
         ))}
@@ -55,4 +58,6 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+const CommentListWithToggleOpen = toggleOpen(ArticleList)
+
+export default CommentListWithToggleOpen
