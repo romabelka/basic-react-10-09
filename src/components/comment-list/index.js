@@ -17,7 +17,9 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button onClick={toggleOpen}>{text}</button>
+        <button onClick={toggleOpen} className="test__comment-list--btn">
+          {text}
+        </button>
         <CSSTransition
           transitionName="comment-list"
           transitionAppear
@@ -38,7 +40,7 @@ class CommentList extends Component {
     const body = comments.length ? (
       <ul>
         {comments.map((comment) => (
-          <li key={comment.id}>
+          <li key={comment.id} className="test__comment-list--item">
             <Comment comment={comment} />
           </li>
         ))}
@@ -48,6 +50,11 @@ class CommentList extends Component {
     )
 
     return <div>{body}</div>
+  }
+
+  componentDidMount() {
+    const { fetchData } = this.props
+    fetchData && fetchData()
   }
 }
 
