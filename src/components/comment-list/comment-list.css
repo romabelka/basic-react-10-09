@@ -1,0 +1,17 @@
+.comments-list-enter {
+    opacity: 0.01;
+}
+
+.comments-list-enter.comments-list-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.comments-list-leave {
+    opacity: 1;
+}
+
+.comments-list-leave.comments-list-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}

@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
+import articlesFilterProptype from './articles-proptype'
 
 class SelectFilter extends Component {
+  static propTypes = {
+    ...articlesFilterProptype
+  }
+
   state = {
     selected: null
   }
