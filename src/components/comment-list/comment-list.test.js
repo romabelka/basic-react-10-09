@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 describe('CommentList', () => {
   it('should render comment list', () => {
     const container = shallow(
-      <CommentList comments={article.comments} toggleOpen={() => {}} />
+      <CommentList comments={articles[0].comments} toggleOpen={() => {}} />
     )
 
     expect(container.find('.test__comment-list--item').length).toEqual(0)
