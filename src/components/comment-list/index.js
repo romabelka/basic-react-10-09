@@ -40,8 +40,8 @@ export class CommentList extends Component {
     const { comments, isOpen } = this.props
     if (!isOpen) return null
 
-    const body = comments.length ? (
-      <ul>
+    return comments.length ? (
+      <ul className="test__comment-list--body">
         {comments.map((comment) => (
           <li key={comment.id} className="test__comment-list--item">
             <Comment comment={comment} />
@@ -51,8 +51,6 @@ export class CommentList extends Component {
     ) : (
       <h3 className="test__comment-list--message">No comments yet</h3>
     )
-
-    return <div>{body}</div>
   }
 }
 

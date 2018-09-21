@@ -1,11 +1,9 @@
 import React from 'react'
-import Enzyme, { mount, render, shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import { mount, render, shallow } from 'enzyme'
 
 import ArticleListWithAccordion, { ArticleList } from './'
 import articles from '../../fixtures'
-
-Enzyme.configure({ adapter: new Adapter() })
+import getTimeout from '../../utils/getTimeoutForTests'
 
 describe('ArticleList', () => {
   it('should render article list', () => {
@@ -45,7 +43,7 @@ describe('ArticleList', () => {
     )
   })
 
-  it('should close an article on click if the article is open', () => {
+  it('should close an article on click if the article is open', async () => {
     const container = mount(<ArticleListWithAccordion articles={articles} />)
 
     container
@@ -55,19 +53,32 @@ describe('ArticleList', () => {
 
     expect(container.find('.test__article--body').length).toEqual(1)
 
+    const cssTransitionWrapper = container
+      .find('.test__article--body')
+      .at(0)
+      .parent()
+
+    const timeout = getTimeout(cssTransitionWrapper)
+
     container
       .find('.test__article--btn')
       .at(0)
       .simulate('click')
 
-    // setTimeout из-за анимации
-    setTimeout(
-      () => expect(container.find('.test__article--body').length).toEqual(0),
-      1000
+    await new Promise((resolve, reject) =>
+      setTimeout(() => {
+        try {
+          container.update()
+          expect(container.find('.test__article--body').length).toEqual(0)
+          resolve()
+        } catch (err) {
+          reject(err)
+        }
+      }, timeout)
     )
   })
 
-  it('should close an article if another article was clicked', () => {
+  it('should close an article if another article was clicked', (done) => {
     const container = mount(<ArticleListWithAccordion articles={articles} />)
 
     container
@@ -76,16 +87,27 @@ describe('ArticleList', () => {
       .simulate('click')
 
     expect(container.find('.test__article--body').length).toEqual(1)
+
+    const cssTransitionWrapper = container
+      .find('.test__article--body')
+      .at(0)
+      .parent()
+
+    const timeout = getTimeout(cssTransitionWrapper)
 
     container
       .find('.test__article--btn')
       .at(1)
       .simulate('click')
 
-    // setTimeout из-за анимации
-    setTimeout(
-      () => expect(container.find('.test__article--body').length).toEqual(1),
-      1000
-    )
+    setTimeout(() => {
+      try {
+        container.simulate('transitionEnd')
+        expect(container.find('.test__article--body').length).toEqual(1)
+        done()
+      } catch (err) {
+        done.fail(err)
+      }
+    }, timeout)
   })
 })
