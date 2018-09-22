@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import DateRange from './date-range'
 import SelectFilter from './select'
 
@@ -11,11 +12,14 @@ class Filters extends Component {
   render() {
     return (
       <div>
-        <SelectFilter articles={this.props.articles} />
+        <SelectFilter />
         <DateRange />
       </div>
     )
   }
 }
 
-export default Filters
+export default connect((state) => ({
+  articles: state.articles,
+  filters: state.filters
+}))(Filters)
