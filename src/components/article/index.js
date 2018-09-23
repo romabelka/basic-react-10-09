@@ -37,6 +37,7 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
           <button onClick={this.handleDelete}>delete me</button>
+          {article.date}
         </h3>
         <CSSTransition
           transitionName="article"
