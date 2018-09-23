@@ -1,16 +1,22 @@
 import {DELETE_ARTICLE, FILTER_ARTICLE} from '../constants'
 import defaultArticles from '../fixtures'
 
-export default (articlesState = defaultArticles, action) => {
+const wrap = (article) => {return {article: article, visible: true}};
+
+export default (articlesState = defaultArticles.map(wrap), action) => {
   const { type, payload, range } = action
 
   switch (type) {
-    case DELETE_ARTICLE:
-      return articlesState.filter((article) => article.id !== payload.id)
+      case DELETE_ARTICLE:
+      return articlesState.filter((wrapper) => wrapper.article.id !== payload.id)
     case FILTER_ARTICLE:
-      return articlesState.filter((article) => {
-        return Date.parse(range.to) >= Date.parse(article.date)
-            && Date.parse(range.from) <= Date.parse(article.date);
+      return articlesState.map((wrapper) => {
+          const date = new Date(wrapper.article.date)
+          const visible = date >= range.from && date <= range.to
+          return {
+              article: wrapper.article,
+              visible: visible
+          }
       })
   }
 
