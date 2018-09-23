@@ -1,17 +1,21 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import CommentList from '../comment-list'
 import './style.css'
 
-class Article extends PureComponent {
+class Article extends Component {
   static propTypes = {
     article: PropTypes.shape({
       title: PropTypes.string.isRequired,
       text: PropTypes.string
     }).isRequired,
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func.isRequired
+    toggleOpen: PropTypes.func.isRequired,
+    isEnableAnim: PropTypes.bool
+  }
+  static defaultProps = {
+    isEnableAnim: true
   }
 
   state = {
@@ -26,7 +30,7 @@ class Article extends PureComponent {
   }
 
   render() {
-    const { article, isOpen } = this.props
+    const { article, isOpen, isEnableAnim } = this.props
     return (
       <div>
         <h3>
@@ -35,15 +39,19 @@ class Article extends PureComponent {
             {isOpen ? 'close' : 'open'}
           </button>
         </h3>
-        <CSSTransition
-          transitionName="article"
-          transitionAppear
-          transitionEnterTimeout={500}
-          transitionAppearTimeout={1000}
-          transitionLeaveTimeout={300}
-        >
-          {this.body}
-        </CSSTransition>
+        {isEnableAnim ? (
+          <CSSTransition
+            transitionName="article"
+            transitionAppear
+            transitionEnterTimeout={500}
+            transitionAppearTimeout={1000}
+            transitionLeaveTimeout={300}
+          >
+            {this.body}
+          </CSSTransition>
+        ) : (
+          this.body
+        )}
       </div>
     )
   }

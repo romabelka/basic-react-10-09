@@ -43,4 +43,18 @@ describe('ArticleList', () => {
       />
     )
   })
+
+  it('should close an article on click', () => {
+    const container = mount(
+      <ArticleListWithAccordion articles={articles} isEnableAnim={false} />
+    )
+
+    container
+      .find('.test__article--btn')
+      .at(0)
+      .simulate('click')
+      .simulate('click')
+
+    expect(container.find('.test__article--body').length).toEqual(0)
+  })
 })
