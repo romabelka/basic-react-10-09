@@ -9,7 +9,7 @@ export default (articlesState = defaultArticles, action) => {
       return articlesState.filter((article) => article.id !== payload.id)
     case RESTORE_ARTICLES:
       return defaultArticles
+    default:
+      return articlesState
   }
-
-  return articlesState
 }

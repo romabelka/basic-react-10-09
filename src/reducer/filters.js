@@ -6,7 +6,7 @@ export default (filtersState = {}, action) => {
   switch (type) {
     case SET_FILTERS:
       return payload
+    default:
+      return filtersState
   }
-
-  return filtersState
 }

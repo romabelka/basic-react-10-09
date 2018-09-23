@@ -32,7 +32,6 @@ class DateRange extends Component {
 
 export default connect(
   (state) => ({
-    articles: state.articles,
     filters: state.filters
   }),
   { setFilters }
