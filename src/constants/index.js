@@ -1,3 +1,11 @@
 export const INCREMENT = 'INCREMENT'
 
 export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+
+export const SELECT_ARTICLE = 'SELECT_ARTICLE'
+
+export const SELECT_RANGE = 'SELECT_RANGE'
+
+export const RESET_FILTERS = 'RESET_FILTERS'
+
+export const APPLY_FILTERS = 'APPLY_FILTERS'
