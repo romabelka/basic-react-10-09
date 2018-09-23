@@ -8,10 +8,7 @@ class SelectFilter extends Component {
     articles: PropTypes.array.isRequired
   }
 
-  state = {
-    selected: null
-  }
-
+  // todo - should be change to dispatch
   handleChange = (selected) => this.setState({ selected })
 
   get options() {
@@ -25,7 +22,7 @@ class SelectFilter extends Component {
     return (
       <Select
         options={this.options}
-        value={this.state.selected}
+        value={this.props.selectedArticles}
         onChange={this.handleChange}
         isMulti
       />
@@ -34,5 +31,6 @@ class SelectFilter extends Component {
 }
 
 export default connect((state) => ({
-  articles: state.articles
+  articles: state.articles,
+  selectedArticles: state.filters.selectedArticles
 }))(SelectFilter)

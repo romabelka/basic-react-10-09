@@ -6,6 +6,8 @@ import Counter from './components/counter'
 
 class App extends Component {
   render() {
+    console.log('STORE = ', window.store.getState())
+
     return (
       <div>
         <UserForm />
