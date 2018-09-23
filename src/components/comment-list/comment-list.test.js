@@ -1,30 +1,36 @@
 import React from 'react'
-import Enzyme, { mount, render, shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import CommentListWithToggleOpen, { CommentList } from './index'
+import { mount } from 'enzyme'
+import CommentList from './index'
 import articles from '../../fixtures'
 
-Enzyme.configure({ adapter: new Adapter() })
-
 describe('CommentList', () => {
-  it('should render comments list', () => {
-    const comments = articles[0].comments
+  it('should be closed by default', () => {
+    const wrapper = mount(<CommentList comments={articles[0].comments} />)
 
-    const container = shallow(<CommentList comments={comments} />)
-
-    expect(container.find('.test__comments-list--item').length).toEqual(
-      comments.length
-    )
+    expect(wrapper.find('.test__comment-list--body').length).toBe(0)
   })
 
-  it('should open an comment-list on click', () => {
-    const container = mount(<CommentListWithToggleOpen articles={articles} />)
+  it('should open on click', () => {
+    const wrapper = mount(<CommentList comments={articles[0].comments} />)
 
-    container
+    wrapper
       .find('.test__comment-list--btn')
       .at(0)
       .simulate('click')
 
-    expect(container.find('.test__comment--ul').length).toEqual(1)
+    expect(wrapper.find('.test__comment-list--item').length).toBe(
+      articles[0].comments.length
+    )
+  })
+
+  it('should display an empty text', () => {
+    const wrapper = mount(<CommentList />)
+
+    wrapper
+      .find('.test__comment-list--btn')
+      .at(0)
+      .simulate('click')
+
+    expect(wrapper.find('.test__comment-list--empty').length).toBe(1)
   })
 })

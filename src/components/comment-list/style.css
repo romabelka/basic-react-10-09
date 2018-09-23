@@ -1,26 +1,17 @@
-.comment-list-enter {
-    opacity: 0.01;
+.comments-enter {
+    opacity: 0;
 }
 
-.comment-list-enter.comment-list-enter-active {
+.comments-enter.comments-enter-active {
     opacity: 1;
     transition: opacity 500ms ease-in;
 }
 
-.comment-list-appear {
-    opacity: 0.01;
-}
-
-.comment-list-appear.comment-list-appear-active {
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-}
-
-.comment-list-leave {
+.comments-leave {
     opacity: 1;
 }
 
-.comment-list-leave.comment-list-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
+.comments-leave.comments-leave-active {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
 }
