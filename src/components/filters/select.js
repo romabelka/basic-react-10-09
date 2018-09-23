@@ -11,7 +11,7 @@ class SelectFilter extends Component {
   }
 
   handleChange = (selected) =>
-    this.props.filterArticles({ selected }, FILTER_BY_NAME)
+    this.props.filterArticles({ selected }, FILTER_BY_NAME, this.props.articles)
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -24,7 +24,7 @@ class SelectFilter extends Component {
     return (
       <Select
         options={this.options}
-        value={this.props.selectedArticles}
+        value={this.props.namesFilter}
         onChange={this.handleChange}
         isMulti
       />
@@ -34,8 +34,8 @@ class SelectFilter extends Component {
 
 export default connect(
   (state) => ({
-    articles: state.articles,
-    selectedArticles: state.filters.selectedArticles
+    articles: Object.assign([], state.articles), // just for test example (deep copy is absent)
+    namesFilter: state.filter.namesFilter
   }),
   { filterArticles }
 )(SelectFilter)
