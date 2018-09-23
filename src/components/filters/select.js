@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import { connect } from 'react-redux'
+import { setSelectorFilter } from '../../ac'
 
 class SelectFilter extends Component {
   static propTypes = {
-    articles: PropTypes.array.isRequired
+    articles: PropTypes.array.isRequired,
+    onChangeHandler: PropTypes.func
   }
-
-  state = {
-    selected: null
-  }
-
-  handleChange = (selected) => this.setState({ selected })
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -21,15 +18,28 @@ class SelectFilter extends Component {
   }
 
   render() {
+    const { selected, onChangeHandler } = this.props
     return (
       <Select
         options={this.options}
-        value={this.state.selected}
-        onChange={this.handleChange}
+        value={selected}
+        onChange={onChangeHandler}
         isMulti
       />
     )
   }
 }
 
-export default SelectFilter
+const mapStateToProps = (storeState) => ({
+  articles: storeState.articles,
+  selected: storeState.filters.selected
+})
+
+const mapDispatchToProps = {
+  onChangeHandler: setSelectorFilter
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectFilter)
