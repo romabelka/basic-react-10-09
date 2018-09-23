@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Article from './article'
 import accordion from '../decorators/accordion'
 
+import { restoreArticles } from '../ac'
+
 export class ArticleList extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired,
@@ -14,13 +16,44 @@ export class ArticleList extends Component {
     toggleItem: PropTypes.func
   }
 
+  handleRestoreClick = () => this.props.restoreArticles()
+
   render() {
-    return <ul>{this.body}</ul>
+    return (
+      <div>
+        <ul>{this.body}</ul>
+        <button onClick={this.handleRestoreClick}>restore articles</button>
+      </div>
+    )
+  }
+
+  get articles() {
+    const { filters } = this.props
+
+    let articles = this.props.articles.slice()
+
+    if (filters.select && filters.select.length) {
+      articles = articles.filter((article) =>
+        filters.select.includes(article.id)
+      )
+    }
+
+    if (filters.dateRange && filters.dateRange.from && filters.dateRange.to) {
+      const dateFrom = Number(new Date(filters.dateRange.from))
+      const dateTo = Number(new Date(filters.dateRange.to))
+
+      articles = articles.filter((article) => {
+        const articleDate = Number(article.date || 0)
+        return articleDate >= dateFrom && articleDate <= dateTo
+      })
+    }
+
+    return articles
   }
 
   get body() {
-    const { toggleOpenItem, openItemId, articles } = this.props
-    return articles.map((article) => (
+    const { toggleOpenItem, openItemId } = this.props
+    return this.articles.map((article) => (
       <li key={article.id} className="test__article-list--item">
         <Article
           article={article}
@@ -39,6 +72,10 @@ export class ArticleList extends Component {
 
 const ArticleListWithAccordion = accordion(ArticleList)
 
-export default connect((state) => ({
-  articles: state.articles
-}))(ArticleListWithAccordion)
+export default connect(
+  (state) => ({
+    articles: state.articles,
+    filters: state.filters
+  }),
+  { restoreArticles }
+)(ArticleListWithAccordion)
