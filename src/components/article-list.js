@@ -8,6 +8,8 @@ export class ArticleList extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired,
     fetchData: PropTypes.func,
+    // filterBySelectedID: PropTypes.number,
+    // filterByDate: PropTypes.array.number,
 
     //from accordion decorator
     openItemId: PropTypes.string,
@@ -19,8 +21,38 @@ export class ArticleList extends Component {
   }
 
   get body() {
-    const { toggleOpenItem, openItemId, articles } = this.props
-    return articles.map((article) => (
+    const {
+      toggleOpenItem,
+      openItemId,
+      articles,
+      filterBySelected,
+      filterByDateRange
+    } = this.props
+
+    let articleList =
+      filterBySelected && filterBySelected.length !== 0
+        ? articles.filter((article) => {
+            for (let i = 0; i < filterBySelected.length; i++) {
+              if (filterBySelected[i].value === article.id) {
+                return true
+              }
+            }
+            return false
+          })
+        : articles
+
+    articleList =
+      filterByDateRange.to || filterByDateRange.from
+        ? articleList.filter((article) => {
+            const creationDate = new Date(article.date)
+            return (
+              creationDate > filterByDateRange.from &&
+              creationDate < filterByDateRange.to
+            )
+          })
+        : articleList
+
+    return articleList.map((article) => (
       <li key={article.id} className="test__article-list--item">
         <Article
           article={article}
@@ -40,5 +72,7 @@ export class ArticleList extends Component {
 const ArticleListWithAccordion = accordion(ArticleList)
 
 export default connect((state) => ({
-  articles: state.articles
+  articles: state.articles,
+  filterBySelected: state.selectFilter,
+  filterByDateRange: state.dateRangeFilter
 }))(ArticleListWithAccordion)
