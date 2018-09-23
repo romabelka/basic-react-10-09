@@ -4,14 +4,13 @@ import Select from 'react-select'
 
 class SelectFilter extends Component {
   static propTypes = {
-    articles: PropTypes.array.isRequired
+    articles: PropTypes.array.isRequired,
+    selectedArticlesList: PropTypes.array,
+    handleSelectArticle: PropTypes.func
   }
 
-  state = {
-    selected: null
-  }
-
-  handleChange = (selected) => this.setState({ selected })
+  handleChange = (selectedArticlesList) =>
+    this.props.handleSelectArticle(selectedArticlesList)
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -21,10 +20,11 @@ class SelectFilter extends Component {
   }
 
   render() {
+    const { selectedArticlesList } = this.props
     return (
       <Select
         options={this.options}
-        value={this.state.selected}
+        value={selectedArticlesList}
         onChange={this.handleChange}
         isMulti
       />
