@@ -1,31 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import DayPicker, { DateUtils } from 'react-day-picker'
 
 import 'react-day-picker/lib/style.css'
 
-class DateRange extends Component {
-  state = {
-    from: null,
-    to: null
-  }
+const DateRange = (props) => {
+  const { dateRange, handleSetDateRange } = props
+  const handleDayClick = (day) =>
+    handleSetDateRange(DateUtils.addDayToRange(day, dateRange))
+  const { from, to } = dateRange
+  const selectedRange =
+    from && to && `${from.toDateString()} - ${to.toDateString()}`
 
-  handleDayClick = (day) =>
-    this.setState(DateUtils.addDayToRange(day, this.state))
+  return (
+    <div className="date-range">
+      <DayPicker
+        selectedDays={(day) => DateUtils.isDayInRange(day, dateRange)}
+        onDayClick={handleDayClick}
+      />
+      {selectedRange}
+    </div>
+  )
+}
 
-  render() {
-    const { from, to } = this.state
-    const selectedRange =
-      from && to && `${from.toDateString()} - ${to.toDateString()}`
-    return (
-      <div className="date-range">
-        <DayPicker
-          selectedDays={(day) => DateUtils.isDayInRange(day, { from, to })}
-          onDayClick={this.handleDayClick}
-        />
-        {selectedRange}
-      </div>
-    )
-  }
+DateRange.propTypes = {
+  dateRange: PropTypes.object.isRequired,
+  handleSetDateRange: PropTypes.func.isRequired
 }
 
 export default DateRange

@@ -19,16 +19,41 @@ export class ArticleList extends Component {
   }
 
   get body() {
-    const { toggleOpenItem, openItemId, articles } = this.props
-    return articles.map((article) => (
-      <li key={article.id} className="test__article-list--item">
-        <Article
-          article={article}
-          isOpen={openItemId === article.id}
-          toggleOpen={toggleOpenItem}
-        />
-      </li>
-    ))
+    const { toggleOpenItem, openItemId, articles, filters } = this.props
+    return articles
+      .filter((article) => {
+        const { selectedArticlesList, dateRange } = filters
+        const selectedArticlesId = selectedArticlesList.map(
+          (selectedArticle) => selectedArticle.value
+        )
+        const hasSelected =
+          ~selectedArticlesId.indexOf(article.id) ||
+          selectedArticlesList.length === 0
+
+        const atricleDate = new Date(article.date)
+        const dateRangeFrom = new Date(dateRange.from)
+        const dateRangeTo = new Date(dateRange.to)
+        const isAfterDateFrom = atricleDate - dateRangeFrom >= 0
+        const isBeforeDateTo = dateRangeTo - atricleDate >= 0
+        const hasDateRange = isAfterDateFrom && isBeforeDateTo
+
+        let inDateRange = true
+
+        if (dateRange.from && !dateRange.to) inDateRange = isAfterDateFrom
+        if (!dateRange.from && dateRange.to) inDateRange = isBeforeDateTo
+        if (dateRange.from && dateRange.to) inDateRange = hasDateRange
+
+        return hasSelected && inDateRange
+      })
+      .map((article) => (
+        <li key={article.id} className="test__article-list--item">
+          <Article
+            article={article}
+            isOpen={openItemId === article.id}
+            toggleOpen={toggleOpenItem}
+          />
+        </li>
+      ))
   }
 
   componentDidMount() {
@@ -40,5 +65,6 @@ export class ArticleList extends Component {
 const ArticleListWithAccordion = accordion(ArticleList)
 
 export default connect((state) => ({
-  articles: state.articles
+  articles: state.articles,
+  filters: state.filters
 }))(ArticleListWithAccordion)
