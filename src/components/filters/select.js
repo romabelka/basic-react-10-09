@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 import { connect } from 'react-redux'
+import { filterArticles } from '../../ac'
+import { FILTER_BY_NAME } from '../../constants'
 
 class SelectFilter extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired
   }
 
-  // todo - should be change to dispatch
-  handleChange = (selected) => this.setState({ selected })
+  handleChange = (selected) =>
+    this.props.filterArticles({ selected }, FILTER_BY_NAME)
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -30,7 +32,10 @@ class SelectFilter extends Component {
   }
 }
 
-export default connect((state) => ({
-  articles: state.articles,
-  selectedArticles: state.filters.selectedArticles
-}))(SelectFilter)
+export default connect(
+  (state) => ({
+    articles: state.articles,
+    selectedArticles: state.filters.selectedArticles
+  }),
+  { filterArticles }
+)(SelectFilter)
