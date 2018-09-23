@@ -1,25 +1,28 @@
 import { DELETE_ARTICLE, FILTER_ARTICLES } from '../constants'
 import defaultArticles from '../fixtures'
 
-const defaultArticlesList = {
-  list: defaultArticles,
+const defaultArticlesState = {
+  list: defaultArticles || [],
   filter: {
     from: null,
     to: null,
-    selected: null
+    selected: []
   }
 }
 
-export default (articlesState = defaultArticlesList, action) => {
+export default (articlesState = defaultArticlesState, action) => {
   const { type, payload } = action
-  const newArticle = Object.assign({}, articlesState)
+  const newArticlesState = Object.assign({}, articlesState)
 
   switch (type) {
     case DELETE_ARTICLE:
-      return articlesState.list.filter((article) => article.id !== payload.id)
+      newArticlesState.list = newArticlesState.list.filter(
+        (article) => article.id !== payload.id
+      )
+      return newArticlesState
     case FILTER_ARTICLES:
-      newArticle.filter = { ...newArticle.filter, ...payload }
-      return newArticle
+      newArticlesState.filter = { ...newArticlesState.filter, ...payload }
+      return newArticlesState
   }
 
   return articlesState

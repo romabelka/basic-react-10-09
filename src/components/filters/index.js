@@ -12,13 +12,13 @@ class Filters extends Component {
   }
 
   render() {
-    const { onFilterChange, from, to, selected } = this.props
+    const { onFilterChange, from, to, selected, articles } = this.props
     return (
       <div>
         <SelectFilter
           onFilterChange={onFilterChange}
           selected={selected}
-          articles={this.props.articles}
+          articles={articles}
         />
         <DateRange onFilterChange={onFilterChange} range={{ from, to }} />
       </div>
@@ -28,7 +28,10 @@ class Filters extends Component {
 
 export default connect(
   (state) => {
-    return { ...state.articles.filter }
+    return {
+      articles: state.articles.list,
+      ...state.articles.filter
+    }
   },
   {
     onFilterChange: filterArticles

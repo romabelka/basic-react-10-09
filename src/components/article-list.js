@@ -18,17 +18,39 @@ export class ArticleList extends Component {
     return <ul>{this.body}</ul>
   }
 
+  filterByDate = (article) => {
+    const { from, to } = this.props.filter
+    if (!from || !to) return true
+
+    const fromDate = new Date(from)
+    const toDate = new Date(to)
+    const date = new Date(article.date)
+
+    return date > fromDate && date < toDate
+  }
+
+  filterBySelect = (article) => {
+    const articleIdList = this.props.filter.selected.map(
+      (article) => article.value
+    )
+
+    return !articleIdList.length ? true : articleIdList.includes(article.id)
+  }
+
   get body() {
     const { toggleOpenItem, openItemId, articles } = this.props
-    return articles.map((article) => (
-      <li key={article.id} className="test__article-list--item">
-        <Article
-          article={article}
-          isOpen={openItemId === article.id}
-          toggleOpen={toggleOpenItem}
-        />
-      </li>
-    ))
+    return articles
+      .filter(this.filterBySelect)
+      .filter(this.filterByDate)
+      .map((article) => (
+        <li key={article.id} className="test__article-list--item">
+          <Article
+            article={article}
+            isOpen={openItemId === article.id}
+            toggleOpen={toggleOpenItem}
+          />
+        </li>
+      ))
   }
 
   componentDidMount() {
@@ -40,5 +62,6 @@ export class ArticleList extends Component {
 const ArticleListWithAccordion = accordion(ArticleList)
 
 export default connect((state) => ({
-  articles: state.articles.list
+  articles: state.articles.list,
+  filter: state.articles.filter
 }))(ArticleListWithAccordion)
