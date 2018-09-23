@@ -1,3 +1,7 @@
 export const INCREMENT = 'INCREMENT'
 
 export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+
+export const RESTORE_ARTICLES = 'RESTORE_ARTICLES'
+
+export const SET_FILTERS = 'SET_FILTERS'
