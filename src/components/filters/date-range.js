@@ -9,13 +9,14 @@ class DateRange extends Component {
     static propTypes = {
         from: PropTypes.object,
         to: PropTypes.object,
-        handleSetRange: PropTypes.func
+        handleSetRange: PropTypes.func,
+        handleUpdateArticles: PropTypes.func
     }
 
   handleDayClick = (day) => {
-      const { filterArticle, handleSetRange } = this.props
+      const { handleUpdateArticles, handleSetRange, from, to } = this.props
       handleSetRange(day)
-      //filterArticle(this.props.from, this.props.to)
+      handleUpdateArticles(from, to)
    }
 
   render() {
@@ -36,15 +37,16 @@ class DateRange extends Component {
 }
 
 const mapStateToProps = (storeState) => ({
-    from: storeState.from,
-    to: storeState.to
+    from: storeState.range.from,
+    to: storeState.range.to
 })
 
 const mapDispatchToProps = {
-    handleSetRange: setRange
+    handleSetRange: setRange,
+    handleUpdateArticles: filterArticle
 }
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(DateRange)
