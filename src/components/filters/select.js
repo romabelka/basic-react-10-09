@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import { connect } from 'react-redux'
 
 class SelectFilter extends Component {
   static propTypes = {
@@ -14,9 +15,9 @@ class SelectFilter extends Component {
   handleChange = (selected) => this.setState({ selected })
 
   get options() {
-    return this.props.articles.map((article) => ({
-      label: article.title,
-      value: article.id
+    return this.props.articles.map((wrapper) => ({
+      label: wrapper.article.title,
+      value: wrapper.article.id
     }))
   }
 
@@ -32,4 +33,6 @@ class SelectFilter extends Component {
   }
 }
 
-export default SelectFilter
+export default connect((state) => ({
+    articles: state.articles
+}))(SelectFilter)
