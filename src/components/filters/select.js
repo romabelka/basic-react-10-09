@@ -7,11 +7,9 @@ class SelectFilter extends Component {
     articles: PropTypes.array.isRequired
   }
 
-  state = {
-    selected: null
+  handleChange = (selected) => {
+    this.props.filterAction(selected)
   }
-
-  handleChange = (selected) => this.setState({ selected })
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -24,7 +22,7 @@ class SelectFilter extends Component {
     return (
       <Select
         options={this.options}
-        value={this.state.selected}
+        value={this.props.selectFilter.selected}
         onChange={this.handleChange}
         isMulti
       />
