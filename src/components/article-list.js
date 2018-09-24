@@ -37,8 +37,19 @@ export class ArticleList extends Component {
   }
 }
 
+const mapStateToProps = (store) => {
+  console.log(store.selectArticle)
+  return {
+    articles: store.articles.filter((el_1) => {
+      return (
+        store.selectArticle.selected.filter((el_2) => {
+          return el_2.label == el_1.title
+        }).length != 0
+      )
+    })
+  }
+}
+
 const ArticleListWithAccordion = accordion(ArticleList)
 
-export default connect((state) => ({
-  articles: state.articles
-}))(ArticleListWithAccordion)
+export default connect(mapStateToProps)(ArticleListWithAccordion)
