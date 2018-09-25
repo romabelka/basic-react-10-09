@@ -34,6 +34,10 @@ class CommentList extends Component {
 
   handleAddComment = () => {
     this.props.handleAddComment(this.state.username, this.state.text)
+    this.setState({
+      username: '',
+      text: ''
+    })
   }
 
   handleChangeUsername = (e) => {
@@ -83,11 +87,18 @@ class CommentList extends Component {
         <div>
           <div>
             <p>Username:</p>
-            <input type="text" onChange={this.handleChangeUsername} />
+            <input
+              type="text"
+              value={this.state.username}
+              onChange={this.handleChangeUsername}
+            />
           </div>
           <div>
             <p>Comment:</p>
-            <textarea onChange={this.handleChangeText} />
+            <textarea
+              value={this.state.text}
+              onChange={this.handleChangeText}
+            />
           </div>
           <button onClick={this.handleAddComment}>Add comment</button>
         </div>
