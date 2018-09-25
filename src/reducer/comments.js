@@ -8,11 +8,10 @@ const defaultComments = normalizedComments.reduce(
 )
 
 export default (commentsState = defaultComments, action) => {
-  const { type, newComment } = action
+  const { type, newComment, id } = action
 
   switch (type) {
     case ADD_COMMENT:
-      let id = 'test'
       return Object.assign({}, commentsState, {
         [id]: Object.assign({}, { id: id }, newComment)
       })
