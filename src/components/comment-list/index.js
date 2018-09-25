@@ -12,7 +12,8 @@ class CommentList extends Component {
     comments: PropTypes.array,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    toggleOpen: PropTypes.func,
+    handleAddComment: PropTypes.func
   }
 
   constructor(props) {
@@ -34,8 +35,7 @@ class CommentList extends Component {
 */
 
   handleAddComment = () => {
-    const { addComment } = this.props
-    addComment(this.state.username, this.state.text)
+    this.props.handleAddComment(this.state.username, this.state.text)
   }
 
   handleChangeUsername = (e) => {
@@ -68,6 +68,8 @@ class CommentList extends Component {
   getBody() {
     const { comments = [], isOpen } = this.props
     if (!isOpen) return null
+
+    console.log(comments.length)
 
     return (
       <div>
@@ -106,7 +108,4 @@ class CommentList extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addComment }
-)(toggleOpen(CommentList))
+export default toggleOpen(CommentList)

@@ -33,9 +33,10 @@ export function changeSelection(selected) {
   }
 }
 
-export function addComment(username, text) {
+export function addComment(article, username, text) {
   return {
     type: ADD_COMMENT,
+    article: article,
     newComment: { user: username, text: text }
   }
 }

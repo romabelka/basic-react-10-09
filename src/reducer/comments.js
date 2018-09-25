@@ -12,9 +12,9 @@ export default (commentsState = defaultComments, action) => {
 
   switch (type) {
     case ADD_COMMENT:
-      let id = 'sdfdsfsdf'
+      let id = 'test'
       return Object.assign({}, commentsState, {
-        [id]: Object.assign({}, newComment, { id: id })
+        [id]: Object.assign({}, { id: id }, newComment)
       })
 
     default:
