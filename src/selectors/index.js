@@ -32,3 +32,9 @@ export const createCommentSelector = () =>
     console.log('---', 'comment selector', id)
     return comments[id]
   })
+
+export const createArticleSelector = () =>
+  createSelector(articlesSelector, idSelector, (article, id) => {
+    console.log('---', 'article selector', id)
+    return article[id]
+  })

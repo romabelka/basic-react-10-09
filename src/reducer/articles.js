@@ -1,7 +1,12 @@
 import { ADD_COMMENT, DELETE_ARTICLE } from '../constants'
-import { normalizedArticles as defaultArticles } from '../fixtures'
+import { normalizedArticles } from '../fixtures'
 
-export default (articlesState = defaultArticles, action) => {
+const defaultArticles = normalizedArticles.reduce(
+  (acc, article) => ({ ...acc, [article.id]: article }),
+  {}
+)
+
+export default (articlesState = normalizedArticles, action) => {
   const { type, payload, article, id } = action
 
   switch (type) {
