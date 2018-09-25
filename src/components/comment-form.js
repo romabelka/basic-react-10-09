@@ -1,36 +1,58 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setComment } from '../ac'
+import { addComment } from '../ac'
 
 class CommentForm extends Component {
+  state = {
+    authorName: '',
+    commentText: ''
+  }
+  handlerAdd = (e) => {
+    addComment(this.state)
+  }
+  handlerChange = (e) => {
+    const { name, value } = e.currentTarget
+    this.setState({
+      [name]: value
+    })
+  }
   render() {
+    const { authorName, commentText } = this.state
     return (
-      <form>
+      <div>
         <div>
-          <input type="text" placeholder="введите имя" />
+          <input
+            type="text"
+            placeholder="введите имя"
+            name="authorName"
+            value={authorName}
+            onChange={this.handlerChange}
+          />
         </div>
         <div>
-          <textarea placeholder="введите ваш комментарий" />
+          <textarea
+            placeholder="введите ваш комментарий"
+            name="commentText"
+            value={commentText}
+            onChange={this.handlerChange}
+          />
         </div>
         <div>
-          <button>Добавить комментарий</button>
+          <div>{this.props.authorName}</div>
+          <div>{this.props.commentText}</div>
+          <button onClick={this.handlerAdd}>Добавить комментарий</button>
         </div>
-      </form>
+      </div>
     )
   }
 }
 
 const mapStateToProps = (store) => {
-  return store
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setNewComment: (newComment) => dispatch(setComment(newComment))
-  }
+  console.log('-----------', store.addComment.addComment)
+  return store.addComment.addComment
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { addComment }
 )(CommentForm)
