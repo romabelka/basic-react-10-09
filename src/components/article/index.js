@@ -31,6 +31,7 @@ class Article extends PureComponent {
     const { article, isOpen } = this.props
     return (
       <div>
+        <span>{article.date}</span>
         <h3>
           {article.title}
           <button onClick={this.handleClick} className="test__article--btn">
@@ -38,6 +39,7 @@ class Article extends PureComponent {
           </button>
           <button onClick={this.handleDelete}>delete me</button>
         </h3>
+
         <CSSTransition
           transitionName="article"
           transitionAppear
