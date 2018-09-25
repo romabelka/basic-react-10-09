@@ -14,10 +14,10 @@ class CommentList extends Component {
   }
 
   /*
-  static defaultProps = {
-    comments: []
-  }
-*/
+    static defaultProps = {
+      comments: []
+    }
+  */
 
   render() {
     const { isOpen, toggleOpen } = this.props
