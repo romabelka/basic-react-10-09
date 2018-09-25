@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
+import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
@@ -34,6 +35,7 @@ class CommentList extends Component {
         >
           {this.getBody()}
         </CSSTransition>
+        <CommentForm />
       </div>
     )
   }
