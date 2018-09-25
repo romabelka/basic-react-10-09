@@ -53,7 +53,7 @@ export class ArticleList extends Component {
 
   get body() {
     const { toggleOpenItem, openItemId } = this.props
-    return this.articles.map((article) => (
+    return this.props.articles.map((article) => (
       <li key={article.id} className="test__article-list--item">
         <Article
           article={article}
@@ -73,9 +73,31 @@ export class ArticleList extends Component {
 const ArticleListWithAccordion = accordion(ArticleList)
 
 export default connect(
-  (state) => ({
-    articles: state.articles,
-    filters: state.filters
-  }),
+  (state) => {
+    const { filters } = state
+
+    let articles = state.articles.slice()
+
+    if (filters.select && filters.select.length) {
+      articles = articles.filter((article) =>
+        filters.select.includes(article.id)
+      )
+    }
+
+    if (filters.dateRange && filters.dateRange.from && filters.dateRange.to) {
+      const dateFrom = Number(new Date(filters.dateRange.from))
+      const dateTo = Number(new Date(filters.dateRange.to))
+
+      articles = articles.filter((article) => {
+        const articleDate = Number(article.date || 0)
+        return articleDate >= dateFrom && articleDate <= dateTo
+      })
+    }
+
+    return {
+      articles: articles,
+      filters: state.filters
+    }
+  },
   { restoreArticles }
 )(ArticleListWithAccordion)
