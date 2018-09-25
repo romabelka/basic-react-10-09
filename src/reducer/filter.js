@@ -8,12 +8,12 @@ export default (
   switch (action.type) {
     case FILTER:
       return {
-        selected: action.payload,
-        range: filter.range
+        selected: action.payload.map(({ label, value }) => ({ label, value })),
+        range: { ...filter.range }
       }
     case RANGE:
       return {
-        selected: filter.selected,
+        selected: filter.selected.map(({ label, value }) => ({ label, value })),
         range: DateUtils.addDayToRange(action.payload, filter.range)
       }
     default:
