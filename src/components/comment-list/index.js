@@ -4,8 +4,6 @@ import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
-import connect from 'react-redux/es/connect/connect'
-import { addComment } from '../../ac'
 
 class CommentList extends Component {
   static propTypes = {
@@ -39,11 +37,15 @@ class CommentList extends Component {
   }
 
   handleChangeUsername = (e) => {
-    this.state.username = e.target.value
+    this.setState({
+      username: e.target.value
+    })
   }
 
   handleChangeText = (e) => {
-    this.state.text = e.target.value
+    this.setState({
+      text: e.target.value
+    })
   }
 
   render() {
@@ -68,8 +70,6 @@ class CommentList extends Component {
   getBody() {
     const { comments = [], isOpen } = this.props
     if (!isOpen) return null
-
-    console.log(comments.length)
 
     return (
       <div>
