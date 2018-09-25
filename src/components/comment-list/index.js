@@ -4,6 +4,8 @@ import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
+import connect from 'react-redux/es/connect/connect'
+import { addComment } from '../../ac'
 
 class CommentList extends Component {
   static propTypes = {
@@ -13,11 +15,36 @@ class CommentList extends Component {
     toggleOpen: PropTypes.func
   }
 
+  constructor(props) {
+    super(props)
+
+    this.handleChangeUsername = this.handleChangeUsername.bind(this)
+    this.handleChangeText = this.handleChangeText.bind(this)
+  }
+
+  state = {
+    username: '',
+    text: ''
+  }
+
   /*
   static defaultProps = {
     comments: []
   }
 */
+
+  handleAddComment = () => {
+    const { addComment } = this.props
+    addComment(this.state.username, this.state.text)
+  }
+
+  handleChangeUsername = (e) => {
+    this.state.username = e.target.value
+  }
+
+  handleChangeText = (e) => {
+    this.state.text = e.target.value
+  }
 
   render() {
     const { isOpen, toggleOpen } = this.props
@@ -43,12 +70,25 @@ class CommentList extends Component {
     if (!isOpen) return null
 
     return (
-      <div className="test__comment-list--body">
-        {comments.length ? (
-          this.comments
-        ) : (
-          <h3 className="test__comment-list--empty">No comments yet</h3>
-        )}
+      <div>
+        <div className="test__comment-list--body">
+          {comments.length ? (
+            this.comments
+          ) : (
+            <h3 className="test__comment-list--empty">No comments yet</h3>
+          )}
+        </div>
+        <div>
+          <div>
+            <p>Username:</p>
+            <input type="text" onChange={this.handleChangeUsername} />
+          </div>
+          <div>
+            <p>Comment:</p>
+            <textarea onChange={this.handleChangeText} />
+          </div>
+          <button onClick={this.handleAddComment}>Add comment</button>
+        </div>
       </div>
     )
   }
@@ -66,4 +106,7 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+export default connect(
+  null,
+  { addComment }
+)(toggleOpen(CommentList))
