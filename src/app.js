@@ -3,6 +3,7 @@ import ArticleList from './components/article-list'
 import UserForm from './components/user-form'
 import Filters from './components/filters'
 import Counter from './components/counter'
+import LikeCaunter from './components/LikeCaunter'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
         <UserForm />
         <Counter />
         <Filters articles={[]} />
+        <LikeCaunter />
         <ArticleList />
       </div>
     )

@@ -1,4 +1,4 @@
-import { DELETE_ARTICLE, INCREMENT } from '../constants'
+import { DELETE_ARTICLE, INCREMENT, LIKE } from '../constants'
 
 export function increment() {
   return {
@@ -10,5 +10,11 @@ export function deleteArticle(id) {
   return {
     type: DELETE_ARTICLE,
     payload: { id }
+  }
+}
+
+export function likePush() {
+  return {
+    type: LIKE
   }
 }
