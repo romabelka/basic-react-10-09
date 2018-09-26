@@ -1,0 +1,12 @@
+.add-comment {
+    width: 400px;
+    max-width: 100%;
+}
+
+.add-comment__user,
+.add-comment__text {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+}
