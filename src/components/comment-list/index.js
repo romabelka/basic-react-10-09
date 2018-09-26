@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
+import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
@@ -10,23 +11,27 @@ class CommentList extends Component {
     comments: PropTypes.array,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    isNewComment: PropTypes.bool,
+    toggleOpen: PropTypes.func,
+    addCommentOpen: PropTypes.func
   }
 
   /*
-  static defaultProps = {
-    comments: []
-  }
-*/
+    static defaultProps = {
+      comments: []
+    }
+  */
 
   render() {
-    const { isOpen, toggleOpen } = this.props
+    const { isOpen, toggleOpen, isNewComment, addCommentOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
+    const textNewComment = isNewComment ? 'close new comment' : 'add comment'
     return (
       <div>
         <button onClick={toggleOpen} className="test__comment-list--btn">
           {text}
         </button>
+        <button onClick={addCommentOpen}>{textNewComment}</button>
         <CSSTransition
           transitionName="comments"
           transitionEnterTimeout={500}
@@ -34,6 +39,7 @@ class CommentList extends Component {
         >
           {this.getBody()}
         </CSSTransition>
+        {this.addNewComment()}
       </div>
     )
   }
@@ -63,6 +69,12 @@ class CommentList extends Component {
         ))}
       </ul>
     )
+  }
+
+  addNewComment() {
+    const { isNewComment } = this.props
+    if (!isNewComment) return null
+    return <CommentForm />
   }
 }
 
