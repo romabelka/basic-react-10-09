@@ -25,7 +25,7 @@ export class ArticleList extends Component {
     return articles.map((article) => (
       <li key={article.id} className="test__article-list--item">
         <Article
-          article={article}
+          id={article.id}
           isOpen={openItemId === article.id}
           toggleOpen={toggleOpenItem}
         />
