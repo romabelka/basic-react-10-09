@@ -3,7 +3,7 @@ import {
   DELETE_ARTICLE,
   CHANGE_DATE_RANGE,
   CHANGE_SELECTION,
-  ADD_COMMENT
+  ADD_COMMENT_TO_LIST
 } from '../constants'
 
 export function increment() {
@@ -35,7 +35,7 @@ export function changeSelection(selected) {
 
 export function addComment(data) {
   return {
-    type: ADD_COMMENT,
+    type: ADD_COMMENT_TO_LIST,
     payload: { data }
   }
 }

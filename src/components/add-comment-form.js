@@ -29,6 +29,7 @@ class AddCommentForm extends Component {
     const [input, textarea] = ev.target
     const user = input.value
     const text = textarea.value
+    const { articleId } = this.props
 
     if (user.trim() === '' || text.trim() === '') {
       this.setState({
@@ -38,7 +39,7 @@ class AddCommentForm extends Component {
       this.setState({
         hasError: false
       })
-      this.props.addComment({ user, text })
+      this.props.addComment({ user, text, articleId })
     }
   }
 }

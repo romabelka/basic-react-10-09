@@ -71,7 +71,7 @@ class Article extends PureComponent {
       <section className="test__article--body">
         {article.text}
         <hr />
-        <AddCommentForm />
+        <AddCommentForm articleId={article.id} />
         <CommentList comments={article.comments} />
       </section>
     )

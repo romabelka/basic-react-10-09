@@ -1,4 +1,4 @@
-import { DELETE_ARTICLE } from '../constants'
+import { DELETE_ARTICLE, ADD_COMMENT_TO_ARTICLE } from '../constants'
 import { normalizedArticles } from '../fixtures'
 
 const defaultArticles = normalizedArticles.reduce(
@@ -12,9 +12,19 @@ export default (articlesState = defaultArticles, action) => {
   switch (type) {
     case DELETE_ARTICLE:
       const cloneArticlesState = { ...articlesState }
-      delete cloneArticlesState.article[payload.id]
+
+      delete cloneArticlesState[payload.id]
 
       return cloneArticlesState
+
+    case ADD_COMMENT_TO_ARTICLE:
+      const articlesStateWithNewComment = { ...articlesState }
+
+      articlesStateWithNewComment[payload.articleId].comments.push(
+        payload.commentId
+      )
+
+      return articlesStateWithNewComment
 
     default:
       return articlesState
