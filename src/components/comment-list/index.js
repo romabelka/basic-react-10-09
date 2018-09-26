@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
+import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
@@ -73,21 +74,7 @@ class CommentList extends Component {
   addNewComment() {
     const { isNewComment } = this.props
     if (!isNewComment) return null
-    return (
-      <div>
-        <p>
-          Автор:
-          <input />
-        </p>
-        <p>
-          Текст:
-          <textarea />
-        </p>
-        <p>
-          <button>Добавить комментарий</button>
-        </p>
-      </div>
-    )
+    return <CommentForm />
   }
 }
 
