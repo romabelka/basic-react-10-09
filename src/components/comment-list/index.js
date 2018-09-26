@@ -10,7 +10,9 @@ class CommentList extends Component {
     comments: PropTypes.array,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    isNewComment: PropTypes.bool,
+    toggleOpen: PropTypes.func,
+    addCommentOpen: PropTypes.func
   }
 
   /*
@@ -20,13 +22,15 @@ class CommentList extends Component {
   */
 
   render() {
-    const { isOpen, toggleOpen } = this.props
+    const { isOpen, toggleOpen, isNewComment, addCommentOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
+    const textNewComment = isNewComment ? 'close new comment' : 'add comment'
     return (
       <div>
         <button onClick={toggleOpen} className="test__comment-list--btn">
           {text}
         </button>
+        <button onClick={addCommentOpen}>{textNewComment}</button>
         <CSSTransition
           transitionName="comments"
           transitionEnterTimeout={500}
@@ -34,6 +38,7 @@ class CommentList extends Component {
         >
           {this.getBody()}
         </CSSTransition>
+        {this.addNewComment()}
       </div>
     )
   }
@@ -62,6 +67,26 @@ class CommentList extends Component {
           </li>
         ))}
       </ul>
+    )
+  }
+
+  addNewComment() {
+    const { isNewComment } = this.props
+    if (!isNewComment) return null
+    return (
+      <div>
+        <p>
+          Автор:
+          <input />
+        </p>
+        <p>
+          Текст:
+          <textarea />
+        </p>
+        <p>
+          <button>Добавить комментарий</button>
+        </p>
+      </div>
     )
   }
 }
