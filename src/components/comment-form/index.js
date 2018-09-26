@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { addComment, addCommentToArticle } from '../../ac'
+import { addComment } from '../../ac'
 import './style.css'
 
 class CommentForm extends Component {
@@ -39,20 +39,13 @@ class CommentForm extends Component {
   saveComment = (event) => {
     event.preventDefault()
 
-    const { addComment, addCommentToArticle } = this.props
-    const id = new Date().toString()
+    const { addComment } = this.props
 
-    addComment(id, this.state.user, this.state.text)
-    addCommentToArticle(this.props.articleId, id)
+    addComment('', this.state.user, this.state.text, this.props.articleId)
   }
-}
-
-const mapDispatchToProps = {
-  addComment,
-  addCommentToArticle
 }
 
 export default connect(
   null,
-  mapDispatchToProps
+  { addComment }
 )(CommentForm)

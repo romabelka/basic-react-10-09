@@ -13,8 +13,8 @@ export default (commentsState = defaultComments, action) => {
     case ADD_COMMENT:
       return {
         ...commentsState,
-        [payload.id]: {
-          id: payload.id,
+        [payload.commentId]: {
+          id: payload.commentId,
           user: payload.user,
           text: payload.text
         }

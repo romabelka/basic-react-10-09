@@ -21,17 +21,16 @@ export function deleteArticle(id) {
 }
 
 export function addCommentToArticle(articleId, commentId) {
-  console.log(articleId, commentId)
   return {
     type: ADD_COMMENT_TO_ARTICLE,
     payload: { articleId, commentId }
   }
 }
 
-export function addComment(id, user, text) {
+export function addComment(commentId, user, text, articleId) {
   return {
     type: ADD_COMMENT,
-    payload: { id, user, text }
+    payload: { commentId, user, text, articleId }
   }
 }
 
