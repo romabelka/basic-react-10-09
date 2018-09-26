@@ -31,11 +31,10 @@ class Article extends PureComponent {
 
   render() {
     const { article, isOpen } = this.props
-    console.log(article)
 
     return (
       <div>
-        {/* <h3>
+        <h3>
           {article.title}
           <button onClick={this.handleClick} className="test__article--btn">
             {isOpen ? 'close' : 'open'}
@@ -50,7 +49,7 @@ class Article extends PureComponent {
           transitionLeaveTimeout={300}
         >
           {this.body}
-        </CSSTransition> */}
+        </CSSTransition>
       </div>
     )
   }
@@ -64,7 +63,6 @@ class Article extends PureComponent {
 
   get body() {
     const { isOpen, article } = this.props
-    console.log(article)
 
     if (!isOpen) return null
     if (this.state.hasError) return <div>Some Error in this article</div>

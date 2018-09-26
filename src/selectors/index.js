@@ -14,8 +14,6 @@ export const filtratedArticles = createSelector(
   (articles, selected, dateRange) => {
     const { from, to } = dateRange
 
-    console.log('---', 'article list selector', articles)
-
     const filtredArticlesList = Object.keys(articles).filter((id) => {
       const published = Date.parse(articles[id].date)
       return (
