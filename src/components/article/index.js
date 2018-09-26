@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import { connect } from 'react-redux'
-import { deleteArticle } from '../../ac'
+import { addComment, deleteArticle } from '../../ac'
 import CommentList from '../comment-list'
 import './style.css'
 
@@ -58,6 +58,11 @@ class Article extends PureComponent {
 
   handleClick = () => this.props.toggleOpen(this.props.article.id)
 
+  handleAddComment = (username, text) => {
+    const { addComment } = this.props
+    addComment(this.props.article, username, text)
+  }
+
   get body() {
     const { isOpen, article } = this.props
     if (!isOpen) return null
@@ -66,7 +71,10 @@ class Article extends PureComponent {
     return (
       <section className="test__article--body">
         {article.text}
-        <CommentList comments={article.comments} />
+        <CommentList
+          comments={article.comments}
+          handleAddComment={this.handleAddComment}
+        />
       </section>
     )
   }
@@ -74,5 +82,5 @@ class Article extends PureComponent {
 
 export default connect(
   null,
-  { deleteArticle }
+  { deleteArticle, addComment }
 )(Article)

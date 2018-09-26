@@ -10,7 +10,20 @@ class CommentList extends Component {
     comments: PropTypes.array,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    toggleOpen: PropTypes.func,
+    handleAddComment: PropTypes.func
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.handleChangeUsername = this.handleChangeUsername.bind(this)
+    this.handleChangeText = this.handleChangeText.bind(this)
+  }
+
+  state = {
+    username: '',
+    text: ''
   }
 
   /*
@@ -18,6 +31,26 @@ class CommentList extends Component {
     comments: []
   }
 */
+
+  handleAddComment = () => {
+    this.props.handleAddComment(this.state.username, this.state.text)
+    this.setState({
+      username: '',
+      text: ''
+    })
+  }
+
+  handleChangeUsername = (e) => {
+    this.setState({
+      username: e.target.value
+    })
+  }
+
+  handleChangeText = (e) => {
+    this.setState({
+      text: e.target.value
+    })
+  }
 
   render() {
     const { isOpen, toggleOpen } = this.props
@@ -43,12 +76,32 @@ class CommentList extends Component {
     if (!isOpen) return null
 
     return (
-      <div className="test__comment-list--body">
-        {comments.length ? (
-          this.comments
-        ) : (
-          <h3 className="test__comment-list--empty">No comments yet</h3>
-        )}
+      <div>
+        <div className="test__comment-list--body">
+          {comments.length ? (
+            this.comments
+          ) : (
+            <h3 className="test__comment-list--empty">No comments yet</h3>
+          )}
+        </div>
+        <div>
+          <div>
+            <p>Username:</p>
+            <input
+              type="text"
+              value={this.state.username}
+              onChange={this.handleChangeUsername}
+            />
+          </div>
+          <div>
+            <p>Comment:</p>
+            <textarea
+              value={this.state.text}
+              onChange={this.handleChangeText}
+            />
+          </div>
+          <button onClick={this.handleAddComment}>Add comment</button>
+        </div>
       </div>
     )
   }
