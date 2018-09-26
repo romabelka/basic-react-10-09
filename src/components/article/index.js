@@ -4,7 +4,9 @@ import CSSTransition from 'react-addons-css-transition-group'
 import { connect } from 'react-redux'
 import { deleteArticle } from '../../ac'
 import CommentList from '../comment-list'
+import AddCommentForm from '../add-comment-form'
 import './style.css'
+import { createArticleSelector } from '../../selectors'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -29,6 +31,7 @@ class Article extends PureComponent {
 
   render() {
     const { article, isOpen } = this.props
+
     return (
       <div>
         <h3>
@@ -60,19 +63,30 @@ class Article extends PureComponent {
 
   get body() {
     const { isOpen, article } = this.props
+
     if (!isOpen) return null
     if (this.state.hasError) return <div>Some Error in this article</div>
 
     return (
       <section className="test__article--body">
         {article.text}
+        <hr />
+        <AddCommentForm articleId={article.id} />
         <CommentList comments={article.comments} />
       </section>
     )
   }
 }
 
+const createMapStateToProps = () => {
+  const articleSelector = createArticleSelector()
+
+  return (state, ownProps) => ({
+    article: articleSelector(state, ownProps)
+  })
+}
+
 export default connect(
-  null,
+  createMapStateToProps,
   { deleteArticle }
 )(Article)
