@@ -40,5 +40,7 @@ export default (store) => (next) => (action) => {
         comment
       }
     })
+  } else {
+    next(action)
   }
 }
