@@ -8,7 +8,13 @@ class CommentForm extends Component {
     commentText: ''
   }
   handlerAdd = (e) => {
-    addComment(this.state)
+    const { articleId, addComment } = this.props
+    addComment({
+      articleId,
+      commentId: '',
+      authorName: this.state.authorName,
+      commentText: this.state.commentText
+    })
   }
   handlerChange = (e) => {
     const { name, value } = e.currentTarget
@@ -47,12 +53,7 @@ class CommentForm extends Component {
   }
 }
 
-const mapStateToProps = (store) => {
-  console.log('-----------', store.addComment.addComment)
-  return store.addComment.addComment
-}
-
 export default connect(
-  mapStateToProps,
+  null,
   { addComment }
 )(CommentForm)

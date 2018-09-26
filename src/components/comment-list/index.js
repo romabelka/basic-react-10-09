@@ -21,7 +21,7 @@ class CommentList extends Component {
 */
 
   render() {
-    const { isOpen, toggleOpen } = this.props
+    const { isOpen, toggleOpen, articleId } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
@@ -35,7 +35,7 @@ class CommentList extends Component {
         >
           {this.getBody()}
         </CSSTransition>
-        <CommentForm />
+        <CommentForm articleId={articleId} />
       </div>
     )
   }

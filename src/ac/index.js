@@ -36,6 +36,6 @@ export function changeSelection(selected) {
 export function addComment(addComment) {
   return {
     type: ADD_COMMENT,
-    payload: { addComment }
+    payload: { ...addComment }
   }
 }
