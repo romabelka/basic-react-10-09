@@ -4,6 +4,7 @@ import CSSTransition from 'react-addons-css-transition-group'
 import { connect } from 'react-redux'
 import { deleteArticle } from '../../ac'
 import CommentList from '../comment-list'
+import CommentForm from '../comment-form'
 import './style.css'
 
 class Article extends PureComponent {
@@ -67,6 +68,7 @@ class Article extends PureComponent {
       <section className="test__article--body">
         {article.text}
         <CommentList comments={article.comments} />
+        <CommentForm articleId={article.id} />
       </section>
     )
   }

@@ -1,6 +1,8 @@
 import {
   INCREMENT,
   DELETE_ARTICLE,
+  ADD_COMMENT_TO_ARTICLE,
+  ADD_COMMENT,
   CHANGE_DATE_RANGE,
   CHANGE_SELECTION
 } from '../constants'
@@ -15,6 +17,20 @@ export function deleteArticle(id) {
   return {
     type: DELETE_ARTICLE,
     payload: { id }
+  }
+}
+
+export function addCommentToArticle(articleId, commentId) {
+  return {
+    type: ADD_COMMENT_TO_ARTICLE,
+    payload: { articleId, commentId }
+  }
+}
+
+export function addComment(commentId, user, text, articleId) {
+  return {
+    type: ADD_COMMENT,
+    payload: { commentId, user, text, articleId }
   }
 }
 

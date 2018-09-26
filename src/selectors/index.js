@@ -16,7 +16,7 @@ export const filtratedArticles = createSelector(
 
     console.log('---', 'article list selector')
 
-    return articles.filter((article) => {
+    return Object.values(articles).filter((article) => {
       const published = Date.parse(article.date)
       return (
         (!selected.length ||
