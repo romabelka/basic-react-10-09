@@ -40,7 +40,7 @@ export class ArticleList extends Component {
 }
 
 export default connect((state) => {
-  console.log('---', 'articles connect')
+  console.log('---', 'articles connect', state)
   return {
     articles: filtratedArticles(state)
   }

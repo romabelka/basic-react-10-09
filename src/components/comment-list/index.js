@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
+import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
@@ -20,7 +21,7 @@ class CommentList extends Component {
 */
 
   render() {
-    const { isOpen, toggleOpen } = this.props
+    const { isOpen, toggleOpen, articleId } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
@@ -34,6 +35,7 @@ class CommentList extends Component {
         >
           {this.getBody()}
         </CSSTransition>
+        <CommentForm articleId={articleId} />
       </div>
     )
   }
