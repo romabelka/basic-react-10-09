@@ -1,0 +1,11 @@
+.comment-name {
+    display: block;
+    padding: 10px;
+}
+.comment-text {
+    display: block;
+    padding: 10px;
+}
+.comment-submit {
+    display: block;
+}
