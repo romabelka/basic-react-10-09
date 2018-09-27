@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { deleteArticle } from '../../ac'
 import CommentList from '../comment-list'
 import './style.css'
-import { createArticleSelector } from '../../selectors'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -73,15 +72,7 @@ class Article extends PureComponent {
   }
 }
 
-const createMapStateToProps = () => {
-  const articleSelector = createArticleSelector()
-
-  return (state, ownProps) => ({
-    comment: articleSelector(state, ownProps)
-  })
-}
-
 export default connect(
-  createMapStateToProps,
+  null,
   { deleteArticle }
 )(Article)
