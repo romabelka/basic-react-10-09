@@ -24,7 +24,7 @@ export default (store) => (next) => (action) => {
     }
 
     default:
-      return
+      next(action)
   }
 
   // console.log('---', 'state after: ', store.getState())
