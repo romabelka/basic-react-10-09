@@ -1,4 +1,4 @@
-import { DELETE_ARTICLE, INCREMENT, LIKE } from '../constants'
+import { DELETE_ARTICLE, INCREMENT, LIKE, SELECT } from '../constants'
 
 export function increment() {
   return {
@@ -16,5 +16,12 @@ export function deleteArticle(id) {
 export function likePush() {
   return {
     type: LIKE
+  }
+}
+
+export function selectArticles(id) {
+  return {
+    type: SELECT,
+    playload: id
   }
 }
