@@ -8,7 +8,8 @@ import {
 } from '../selectors'
 import Loader from './common/loader'
 
-function Comment({ comment, loading, loaded }) {
+function Comment({ comment, loading, loaded, onLoad }) {
+  onLoad && onLoad(loaded)
   return (
     <div>
       {comment && (
@@ -16,7 +17,7 @@ function Comment({ comment, loading, loaded }) {
           {comment.text} <b>by {comment.user}</b>
         </div>
       )}
-      {loading && !loaded && <Loader />}
+      {loading && !comment && <Loader />}
     </div>
   )
 }
@@ -27,7 +28,8 @@ Comment.propTypes = {
     user: PropTypes.string.isRequired
   }),
   loading: PropTypes.bool,
-  loaded: PropTypes.bool
+  loaded: PropTypes.bool,
+  onLoad: PropTypes.func
 }
 
 const createMapStateToProps = () => {

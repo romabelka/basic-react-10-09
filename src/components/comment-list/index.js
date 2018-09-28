@@ -15,6 +15,10 @@ class CommentList extends Component {
     loadComments: PropTypes.func
   }
 
+  state = {
+    loaded: false
+  }
+
   /*
   static defaultProps = {
     comments: []
@@ -24,7 +28,7 @@ class CommentList extends Component {
   componentDidUpdate(oldProps) {
     const { isOpen, loadComments } = this.props
 
-    if (!oldProps.isOpen && isOpen) loadComments()
+    if (!oldProps.isOpen && isOpen /*&& !this.state.loaded*/) loadComments()
   }
 
   render() {
@@ -70,7 +74,10 @@ class CommentList extends Component {
       <ul>
         {this.props.article.comments.map((id) => (
           <li key={id} className="test__comment-list--item">
-            <Comment id={id} />
+            <Comment
+              id={id}
+              onLoad={(loaded) => (this.state.loaded = loaded)}
+            />
           </li>
         ))}
       </ul>
