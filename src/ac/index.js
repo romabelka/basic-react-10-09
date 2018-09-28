@@ -93,7 +93,7 @@ export function loadArticleById(id) {
 export function loadComments(id) {
   return (dispatch) => {
     dispatch({
-      type: LOAD_COMMENTS,
+      type: LOAD_COMMENTS + START,
       payload: { id }
     })
 
