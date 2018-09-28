@@ -11,7 +11,8 @@ class CommentList extends Component {
     article: PropTypes.object,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    toggleOpen: PropTypes.func,
+    loadComments: PropTypes.func
   }
 
   /*
@@ -19,6 +20,12 @@ class CommentList extends Component {
     comments: []
   }
 */
+
+  componentDidUpdate(oldProps) {
+    const { isOpen, loadComments } = this.props
+
+    if (!oldProps.isOpen && isOpen) loadComments()
+  }
 
   render() {
     const { isOpen, toggleOpen } = this.props

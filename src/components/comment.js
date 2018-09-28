@@ -6,7 +6,11 @@ import { createCommentSelector } from '../selectors'
 function Comment({ comment }) {
   return (
     <div>
-      {comment.text} <b>by {comment.user}</b>
+      {comment && (
+        <div>
+          {comment.text} <b>by {comment.user}</b>
+        </div>
+      )}
     </div>
   )
 }
@@ -15,7 +19,7 @@ Comment.propTypes = {
   comment: PropTypes.shape({
     text: PropTypes.string.isRequired,
     user: PropTypes.string.isRequired
-  }).isRequired
+  })
 }
 
 const createMapStateToProps = () => {
