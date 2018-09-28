@@ -94,8 +94,7 @@ export function loadComments(id) {
   return (dispatch) => {
     dispatch({
       type: LOAD_COMMENTS,
-      payload: { id },
-      callAPI: `/api/comment?article=${id}`
+      payload: { id }
     })
 
     fetch(`/api/comment?article=${id}`)

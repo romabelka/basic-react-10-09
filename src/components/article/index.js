@@ -65,7 +65,10 @@ class Article extends PureComponent {
 
   handleClick = () => this.props.toggleOpen(this.props.article.id)
 
-  handleLoadComments = () => loadComments(this.props.article.id)
+  handleLoadComments = () => {
+    const { article, loadComments } = this.props
+    loadComments(article.id)
+  }
 
   get body() {
     const { isOpen, article } = this.props

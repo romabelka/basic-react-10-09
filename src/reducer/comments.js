@@ -5,8 +5,7 @@ import { Record } from 'immutable'
 const CommentRecord = Record({
   id: null,
   text: null,
-  user: null,
-  loading: false
+  user: null
 })
 
 const ReducerRecord = Record({
