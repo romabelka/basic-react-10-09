@@ -1,4 +1,4 @@
-import { DELETE_ARTICLE, INCREMENT, LIKE, SELECT } from '../constants'
+import { DELETE_ARTICLE, INCREMENT, LIKE, SELECT, DAYS } from '../constants'
 
 export function increment() {
   return {
@@ -19,9 +19,16 @@ export function likePush() {
   }
 }
 
-export function selectArticles(id) {
+export function selectArticles(selected) {
   return {
     type: SELECT,
-    playload: id
+    payload: { selected }
+  }
+}
+
+export function selectDay(dateRange) {
+  return {
+    type: DAYS,
+    payload: { dateRange }
   }
 }

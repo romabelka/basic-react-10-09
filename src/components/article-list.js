@@ -39,6 +39,14 @@ export class ArticleList extends Component {
 
 const ArticleListWithAccordion = accordion(ArticleList)
 
-export default connect((state) => ({
-  articles: state.articles
-}))(ArticleListWithAccordion)
+export default connect((state) => {
+  const { selected } = state.filters
+  console.log(state)
+  const filtratedArticles = state.articles.filter((article) => {
+    return (
+      !selected.length ||
+      selected.find((selected) => selected.value === article.id)
+    )
+  })
+  return { articles: filtratedArticles }
+})(ArticleListWithAccordion)
