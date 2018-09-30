@@ -23,11 +23,12 @@ export default (state = new CommentsReducerRecord(), action) => {
       })
 
     case LOAD_COMMENTS + START:
-      console.log('load comments start----------', state)
-      return state.setIn(['entities', payload.id, 'loading'], true)
+      return state.set(['entities', payload.id, 'loading'], true)
 
     case LOAD_COMMENTS + SUCCESS:
-      return state.setIn(['entities', payload.id], new CommentRecord(response))
+      return state
+        .set('entities', arrToMap(response, CommentRecord))
+        .set('loading', false)
 
     default:
       return state

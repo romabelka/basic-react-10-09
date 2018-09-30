@@ -49,6 +49,7 @@ class CommentList extends Component {
   }
 
   getBody() {
+    this.props.loadCommentsById(this.props.article.id)
     const {
       article: { comments = [], id },
       isOpen
