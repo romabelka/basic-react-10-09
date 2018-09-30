@@ -4,6 +4,7 @@ import {
   CHANGE_DATE_RANGE,
   CHANGE_SELECTION,
   ADD_COMMENT,
+  LOAD_COMMENTS,
   LOAD_ALL_ARTICLES,
   LOAD_ARTICLE,
   SUCCESS,
@@ -82,6 +83,32 @@ export function loadArticleById(id) {
       .catch((error) =>
         dispatch({
           type: LOAD_ARTICLE + FAIL,
+          payload: { id },
+          error
+        })
+      )
+  }
+}
+
+export function loadCommentsById(id) {
+  return (dispatch) => {
+    dispatch({
+      type: LOAD_COMMENTS + START,
+      payload: { id }
+    })
+
+    fetch(`/api/comment?article=${id}`)
+      .then((res) => res.json())
+      .then((response) =>
+        dispatch({
+          type: LOAD_COMMENTS + SUCCESS,
+          payload: { id },
+          response
+        })
+      )
+      .catch((error) =>
+        dispatch({
+          type: LOAD_COMMENTS + FAIL,
           payload: { id },
           error
         })

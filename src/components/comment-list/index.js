@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
 import CommentForm from '../comment-form'
+import { connect } from 'react-redux'
+import { loadCommentsById } from '../../ac'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
@@ -20,7 +22,14 @@ class CommentList extends Component {
   }
 */
 
+  componentDidUpdate(oldProps) {
+    const { isOpen, article, loadCommentsById } = this.props
+
+    loadCommentsById(article.id)
+  }
+
   render() {
+    console.log('----------------------------------', this.props.article.id)
     const { isOpen, toggleOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
@@ -71,4 +80,7 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+export default connect(
+  null,
+  { loadCommentsById }
+)(toggleOpen(CommentList))
