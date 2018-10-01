@@ -10,7 +10,7 @@ const CommentRecord = Record({
 
 const CommentsReducerRecord = Record({
   entities: arrToMap([], CommentRecord),
-  loading: false
+  loading: true
 })
 
 export default (state = new CommentsReducerRecord(), action) => {
@@ -23,7 +23,7 @@ export default (state = new CommentsReducerRecord(), action) => {
       })
 
     case LOAD_COMMENTS + START:
-      return state.set(['entities', payload.id, 'loading'], true)
+      return state.set('loading', true)
 
     case LOAD_COMMENTS + SUCCESS:
       return state

@@ -5,6 +5,8 @@ import Comment from '../comment'
 import CommentForm from '../comment-form'
 import { connect } from 'react-redux'
 import { loadCommentsById } from '../../ac'
+import { commentsLoadingSelector } from '../../selectors'
+import Loader from '../common/loader'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
@@ -24,12 +26,10 @@ class CommentList extends Component {
 
   componentDidUpdate(oldProps) {
     const { isOpen, article, loadCommentsById } = this.props
-
-    loadCommentsById(article.id)
+    if (!oldProps.isOpen && isOpen) loadCommentsById(article.id)
   }
 
   render() {
-    console.log('----------------------------------', this.props.article.id)
     const { isOpen, toggleOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
@@ -49,13 +49,13 @@ class CommentList extends Component {
   }
 
   getBody() {
-    this.props.loadCommentsById(this.props.article.id)
+    console.log('----------------------------------', this.props.loading)
     const {
       article: { comments = [], id },
       isOpen
     } = this.props
     if (!isOpen) return null
-
+    if (this.props.loading) return <Loader />
     return (
       <div className="test__comment-list--body">
         {comments.length ? (
@@ -82,6 +82,10 @@ class CommentList extends Component {
 }
 
 export default connect(
-  null,
+  (state) => {
+    return {
+      loading: commentsLoadingSelector(state)
+    }
+  },
   { loadCommentsById }
 )(toggleOpen(CommentList))
