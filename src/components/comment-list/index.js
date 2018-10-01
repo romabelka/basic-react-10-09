@@ -76,7 +76,7 @@ class CommentList extends Component {
           <li key={id} className="test__comment-list--item">
             <Comment
               id={id}
-              onLoad={(loaded) => (this.state.loaded = loaded)}
+              onLoad={(loaded) => this.setState({ loaded: loaded })}
             />
           </li>
         ))}
