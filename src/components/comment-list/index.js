@@ -1,14 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
+import { connect } from 'react-redux'
 import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
+import { loadComments } from '../../ac'
+import Loader from '../common/loader'
+import {
+  commentsLoadingSelector,
+  commentLoadedSelector,
+  commentsErrorSelector
+} from '../../selectors'
 import './style.css'
 
 class CommentList extends Component {
   static propTypes = {
     article: PropTypes.object,
+    loading: PropTypes.bool,
+    loaded: PropTypes.bool,
+    error: PropTypes.string,
+    loadComments: PropTypes.func,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func
@@ -19,6 +31,12 @@ class CommentList extends Component {
     comments: []
   }
 */
+
+  componentDidUpdate(prevProps) {
+    const { isOpen, article, loadComments, loading, loaded } = this.props
+    if (!prevProps.isOpen && isOpen && !loading && !loaded)
+      loadComments(article.id)
+  }
 
   render() {
     const { isOpen, toggleOpen } = this.props
@@ -41,10 +59,19 @@ class CommentList extends Component {
 
   getBody() {
     const {
-      article: { comments = [], id },
-      isOpen
+      article: { comments, id },
+      isOpen,
+      loading,
+      loaded,
+      error
     } = this.props
-    if (!isOpen) return null
+
+    if (error)
+      return <div style={{ color: 'red' }}>Server is not available.</div>
+
+    if (!isOpen || (!loading && !loaded)) return null
+
+    if (loading) return <Loader />
 
     return (
       <div className="test__comment-list--body">
@@ -71,4 +98,15 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loading: commentsLoadingSelector(state),
+    loaded: commentLoadedSelector(state, ownProps),
+    error: commentsErrorSelector(state)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { loadComments }
+)(toggleOpen(CommentList))

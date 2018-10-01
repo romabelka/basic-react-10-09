@@ -42,6 +42,12 @@ export default (articlesState = new ReducerRecord(), action) => {
       return articlesState.set('loading', true)
 
     case LOAD_ALL_ARTICLES + SUCCESS:
+      console.log(
+        articlesState
+          .set('entities', arrToMap(response, ArticleRecord))
+          .set('loading', false)
+          .set('loaded', true)
+      )
       return articlesState
         .set('entities', arrToMap(response, ArticleRecord))
         .set('loading', false)
