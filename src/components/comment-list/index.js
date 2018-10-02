@@ -5,7 +5,6 @@ import Comment from '../comment'
 import CommentForm from '../comment-form'
 import { connect } from 'react-redux'
 import { loadCommentsById } from '../../ac'
-import { commentsLoadingSelector } from '../../selectors'
 import Loader from '../common/loader'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
@@ -23,6 +22,9 @@ class CommentList extends Component {
     comments: []
   }
 */
+  state = {
+    isLoaded: false
+  }
 
   componentDidUpdate(oldProps) {
     const { isOpen, article, loadCommentsById } = this.props
@@ -49,7 +51,6 @@ class CommentList extends Component {
   }
 
   getBody() {
-    console.log('----------------------------------', this.props.loading)
     const {
       article: { comments = [], id },
       isOpen
@@ -84,7 +85,7 @@ class CommentList extends Component {
 export default connect(
   (state) => {
     return {
-      loading: commentsLoadingSelector(state)
+      loading: state.comments.loading
     }
   },
   { loadCommentsById }

@@ -34,7 +34,12 @@ export const filtratedArticles = createSelector(
 )
 
 export const createCommentSelector = () =>
-  createSelector(commentsSelector, idSelector, (comments, id) => {
-    console.log('---', 'comment selector', id)
-    return comments.get(id)
-  })
+  createSelector(
+    commentsSelector,
+    idSelector,
+    commentsLoadingSelector,
+    (comments, id) => {
+      console.log('---', 'comment selector', id)
+      return comments.get(id)
+    }
+  )

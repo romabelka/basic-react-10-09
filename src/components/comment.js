@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { createCommentSelector } from '../selectors'
 
 function Comment({ comment }) {
+  if (!comment) return null
   return (
     <div>
       {comment.text} <b>by {comment.user}</b>
