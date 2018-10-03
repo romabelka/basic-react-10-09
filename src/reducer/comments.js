@@ -1,4 +1,4 @@
-import {} from '../constants'
+import { ADD_COMMENT } from '../constants'
 import { normalizedComments } from '../fixtures'
 
 const defaultComments = normalizedComments.reduce(
@@ -7,9 +7,11 @@ const defaultComments = normalizedComments.reduce(
 )
 
 export default (commentsState = defaultComments, action) => {
-  const { type } = action
+  const { type, playload } = action
 
   switch (type) {
+    case ADD_COMMENT:
+      return { ...commentsState, action }
     default:
       return commentsState
   }
