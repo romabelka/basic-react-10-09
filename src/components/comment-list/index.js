@@ -22,13 +22,11 @@ class CommentList extends Component {
     comments: []
   }
 */
-  state = {
-    isLoaded: false
-  }
 
   componentDidUpdate(oldProps) {
-    const { isOpen, article, loadCommentsById } = this.props
-    if (!oldProps.isOpen && isOpen) loadCommentsById(article.id)
+    const { isOpen, article, loadCommentsById, loadedComments } = this.props
+    if (!oldProps.isOpen && isOpen && !loadedComments.includes(article.id))
+      loadCommentsById(article.id)
   }
 
   render() {
@@ -85,7 +83,8 @@ class CommentList extends Component {
 export default connect(
   (state) => {
     return {
-      loading: state.comments.loading
+      loading: state.comments.loading,
+      loadedComments: state.comments.loaded
     }
   },
   { loadCommentsById }
