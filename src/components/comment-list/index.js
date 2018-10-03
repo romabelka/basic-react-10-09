@@ -11,7 +11,12 @@ class CommentList extends Component {
     article: PropTypes.object,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    toggleOpen: PropTypes.func,
+    loadComments: PropTypes.func
+  }
+
+  state = {
+    loaded: false
   }
 
   /*
@@ -19,6 +24,12 @@ class CommentList extends Component {
     comments: []
   }
 */
+
+  componentDidUpdate(oldProps) {
+    const { isOpen, loadComments } = this.props
+
+    if (!oldProps.isOpen && isOpen /*&& !this.state.loaded*/) loadComments()
+  }
 
   render() {
     const { isOpen, toggleOpen } = this.props
@@ -63,7 +74,10 @@ class CommentList extends Component {
       <ul>
         {this.props.article.comments.map((id) => (
           <li key={id} className="test__comment-list--item">
-            <Comment id={id} />
+            <Comment
+              id={id}
+              onLoad={(loaded) => this.setState({ loaded: loaded })}
+            />
           </li>
         ))}
       </ul>
