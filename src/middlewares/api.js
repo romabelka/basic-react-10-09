@@ -2,6 +2,7 @@ import { FAIL, START, SUCCESS } from '../constants'
 
 export default (store) => (next) => (action) => {
   const { callAPI, type, ...rest } = action
+  console.log('action---', action)
   if (!callAPI) return next(action)
 
   store.dispatch({
