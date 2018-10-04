@@ -7,6 +7,7 @@ export const dateRangeSelector = (state) => state.filters.dateRange
 export const selectedSelector = (state) => state.filters.selected
 
 export const idSelector = (_, props) => props.id
+export const articleIdSelector = (_, props) => props.article.id
 export const articlesListSelector = createSelector(
   articlesMapSelector,
   (articlesMap) => articlesMap.valueSeq().toArray()
@@ -36,4 +37,9 @@ export const createCommentSelector = () =>
   createSelector(commentsSelector, idSelector, (comments, id) => {
     console.log('---', 'comment selector', id)
     return comments.get(id)
+  })
+
+export const createCommentLoadingSelector = () =>
+  createSelector(articlesMapSelector, articleIdSelector, (articles, id) => {
+    return articles.get(id).loadingComments
   })

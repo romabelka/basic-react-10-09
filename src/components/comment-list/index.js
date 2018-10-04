@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { loadCommentsByArticleId } from '../../ac'
+import { commentsSelector, createCommentLoadingSelector } from '../../selectors'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
+import Loader from '../common/loader'
 import './style.css'
 
 class CommentList extends Component {
   static propTypes = {
     article: PropTypes.object,
+    commentsMap: PropTypes.object,
+    fetchData: PropTypes.func,
+    isLoading: PropTypes.bool,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func
@@ -19,6 +26,18 @@ class CommentList extends Component {
     comments: []
   }
 */
+
+  componentDidUpdate(oldProps) {
+    const { isOpen, article, loadCommentsByArticleId, commentsMap } = this.props
+
+    if (
+      !oldProps.isOpen &&
+      isOpen &&
+      !article.comments.every((comment) => commentsMap.get(comment))
+    ) {
+      loadCommentsByArticleId(article.id)
+    }
+  }
 
   render() {
     const { isOpen, toggleOpen } = this.props
@@ -42,13 +61,17 @@ class CommentList extends Component {
   getBody() {
     const {
       article: { comments = [], id },
-      isOpen
+      isOpen,
+      commentsMap,
+      isLoading
     } = this.props
     if (!isOpen) return null
+    if (isLoading) return <Loader />
 
     return (
       <div className="test__comment-list--body">
-        {comments.length ? (
+        {comments.length &&
+        comments.every((comment) => commentsMap.get(comment)) ? (
           this.comments
         ) : (
           <h3 className="test__comment-list--empty">No comments yet</h3>
@@ -59,11 +82,12 @@ class CommentList extends Component {
   }
 
   get comments() {
+    const { article } = this.props
     return (
       <ul>
         {this.props.article.comments.map((id) => (
           <li key={id} className="test__comment-list--item">
-            <Comment id={id} />
+            <Comment id={id} articleId={article.id} />
           </li>
         ))}
       </ul>
@@ -71,4 +95,16 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+const createMapStateToProps = () => {
+  const commentLoadingSelector = createCommentLoadingSelector()
+
+  return (state, ownProps) => ({
+    isLoading: commentLoadingSelector(state, ownProps),
+    commentsMap: commentsSelector(state)
+  })
+}
+
+export default connect(
+  createMapStateToProps,
+  { loadCommentsByArticleId }
+)(toggleOpen(CommentList))
