@@ -2,7 +2,8 @@ import {
   INCREMENT,
   DELETE_ARTICLE,
   CHANGE_DATE_RANGE,
-  CHANGE_SELECTION
+  CHANGE_SELECTION,
+  ADD_COMMENT
 } from '../constants'
 
 export function increment() {
@@ -29,5 +30,13 @@ export function changeSelection(selected) {
   return {
     type: CHANGE_SELECTION,
     payload: { selected }
+  }
+}
+
+export function addComment(articleId, user, text) {
+  console.log('--- create action addComment: ', user, text)
+  return {
+    type: ADD_COMMENT,
+    payload: { id: articleId, user, text }
   }
 }

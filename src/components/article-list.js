@@ -42,6 +42,6 @@ export class ArticleList extends Component {
 export default connect((state) => {
   console.log('---', 'articles connect')
   return {
-    articles: filtratedArticles(state)
+    articles: Object.values(filtratedArticles(state))
   }
 })(accordion(ArticleList))

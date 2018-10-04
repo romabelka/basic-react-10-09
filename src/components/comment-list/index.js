@@ -5,6 +5,8 @@ import Comment from '../comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 
+import AddCommentForm from './add-comment-form'
+
 class CommentList extends Component {
   static propTypes = {
     comments: PropTypes.array,
@@ -39,16 +41,19 @@ class CommentList extends Component {
   }
 
   getBody() {
-    const { comments = [], isOpen } = this.props
+    const { comments = [], isOpen, articleId } = this.props
     if (!isOpen) return null
 
     return (
-      <div className="test__comment-list--body">
-        {comments.length ? (
-          this.comments
-        ) : (
-          <h3 className="test__comment-list--empty">No comments yet</h3>
-        )}
+      <div>
+        <AddCommentForm articleId={articleId} />
+        <div className="test__comment-list--body">
+          {comments.length ? (
+            this.comments
+          ) : (
+            <h3 className="test__comment-list--empty">No comments yet</h3>
+          )}
+        </div>
       </div>
     )
   }
