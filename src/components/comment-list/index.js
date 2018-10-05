@@ -8,7 +8,7 @@ import CommentAddForm from '../commentAddForm'
 
 class CommentList extends Component {
   static propTypes = {
-    comments: PropTypes.array,
+    comments: PropTypes.object,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func
@@ -40,7 +40,10 @@ class CommentList extends Component {
   }
 
   getBody() {
-    const { comments = [], isOpen } = this.props
+    const {
+      article: { comments = [], id },
+      isOpen
+    } = this.props
     if (!isOpen) return null
 
     return (

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addComment } from '../ac'
+import comment from './comment'
 
 class CommentAddForm extends Component {
   state = {
     user: '',
-    comment: ''
+    text: ''
   }
 
   render() {
@@ -20,7 +21,7 @@ class CommentAddForm extends Component {
           {' '}
           comment:
           <input
-            value={this.state.comment}
+            value={this.state.text}
             type="text"
             onChange={this.handleChangeComment}
           />
@@ -33,25 +34,29 @@ class CommentAddForm extends Component {
   }
 
   handleChangeUser = (evt) => {
-    console.log(evt.target.value)
     this.setState({
       user: evt.target.value
     })
   }
 
   handleChangeComment = (evt) => {
-    console.log(evt.target.value)
     this.setState({
-      comment: evt.target.value
+      text: evt.target.value
     })
   }
 
   handleClick = () => {
     this.props.addComment(this.state)
+    this.setState({
+      user: '',
+      text: ''
+    })
   }
 }
 
 export default connect(
   null,
-  { addComment }
+  (dispatch, ownProps) => ({
+    addComment: (comment) => dispatch(addComment(comment, ownProps.articleId))
+  })
 )(CommentAddForm)

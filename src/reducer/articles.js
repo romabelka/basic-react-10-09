@@ -1,12 +1,25 @@
-import { DELETE_ARTICLE } from '../constants'
-import { normalizedArticles as defaultArticles } from '../fixtures'
+import { DELETE_ARTICLE, ADD_COMMENT } from '../constants'
+import { normalizedArticles } from '../fixtures'
 
-export default (articlesState = defaultArticles, action) => {
+const objArticles = normalizedArticles.reduce(
+  (acc, article) => ({
+    ...acc,
+    [article.id]: article
+  }),
+  {}
+)
+
+export default (articlesState = objArticles, action) => {
   const { type, payload } = action
 
   switch (type) {
     case DELETE_ARTICLE:
-      return articlesState.filter((article) => article.id !== payload.id)
+      const articlesCopy = { ...articlesState }
+      delete articlesCopy[payload.id]
+      return articlesCopy
+
+    case ADD_COMMENT:
+      const article = articlesState[payload.articleId]
 
     default:
       return articlesState
