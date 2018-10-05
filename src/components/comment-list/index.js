@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { loadCommentsById } from '../../ac'
 import Loader from '../common/loader'
 import toggleOpen from '../../decorators/toggleOpen'
+import { loadedCommentSelector } from '../../selectors'
 import './style.css'
 
 class CommentList extends Component {
@@ -25,7 +26,7 @@ class CommentList extends Component {
 
   componentDidUpdate(oldProps) {
     const { isOpen, article, loadCommentsById, loadedComments } = this.props
-    if (!oldProps.isOpen && isOpen && !loadedComments.includes(article.id))
+    if (!oldProps.isOpen && isOpen && !loadedComments)
       loadCommentsById(article.id)
   }
 
@@ -81,10 +82,11 @@ class CommentList extends Component {
 }
 
 export default connect(
-  (state) => {
+  (state, ownProps) => {
     return {
       loading: state.comments.loading,
-      loadedComments: state.comments.loaded
+      //loadedComments: state.comments.loaded
+      loadedComments: loadedCommentSelector(state, ownProps)
     }
   },
   { loadCommentsById }
