@@ -62,11 +62,10 @@ class Article extends PureComponent {
     const { isOpen, article } = this.props
     if (!isOpen) return null
     if (this.state.hasError) return <div>Some Error in this article</div>
-
     return (
       <section className="test__article--body">
         {article.text}
-        <CommentList comments={article.comments} />
+        <CommentList article={article} />
       </section>
     )
   }

@@ -11,6 +11,7 @@ const objArticles = normalizedArticles.reduce(
 
 export default (articlesState = objArticles, action) => {
   const { type, payload } = action
+  console.log('values of payload', action)
 
   switch (type) {
     case DELETE_ARTICLE:

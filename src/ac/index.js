@@ -37,6 +37,7 @@ export function addComment(comment) {
   return {
     type: ADD_COMMENT,
     payload: { comment },
-    idHave: true
+    idHave: true,
+    articleId: ''
   }
 }

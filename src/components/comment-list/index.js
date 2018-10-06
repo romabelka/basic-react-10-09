@@ -40,15 +40,12 @@ class CommentList extends Component {
   }
 
   getBody() {
-    const {
-      article: { comments = [], id },
-      isOpen
-    } = this.props
+    const { article, isOpen } = this.props
     if (!isOpen) return null
 
     return (
       <div className="test__comment-list--body">
-        {comments.length ? (
+        {article.comments.length ? (
           this.comments
         ) : (
           <h3 className="test__comment-list--empty">No comments yet</h3>
@@ -61,13 +58,13 @@ class CommentList extends Component {
     return (
       <div>
         <ul>
-          {this.props.comments.map((id) => (
+          {this.props.article.comments.map((id) => (
             <li key={id} className="test__comment-list--item">
               <Comment id={id} />
             </li>
           ))}
         </ul>
-        <CommentAddForm />
+        <CommentAddForm articleId={this.props.article.id} />
       </div>
     )
   }
