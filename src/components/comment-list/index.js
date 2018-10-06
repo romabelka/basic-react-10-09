@@ -5,6 +5,10 @@ import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
+import { loadCommentsByArticleId } from '../../ac'
+import { connect } from 'react-redux'
+import { commentsIdsSelector, commentsLoadingSelector } from '../../selectors'
+import Loader from '../common/loader'
 
 class CommentList extends Component {
   static propTypes = {
@@ -14,11 +18,12 @@ class CommentList extends Component {
     toggleOpen: PropTypes.func
   }
 
-  /*
-  static defaultProps = {
-    comments: []
+  componentDidUpdate(oldProps) {
+    const { isOpen, comments } = this.props
+    if (!oldProps.isOpen && isOpen) {
+      this.props.fetchData(this.props.article.id)
+    }
   }
-*/
 
   render() {
     const { isOpen, toggleOpen } = this.props
@@ -45,7 +50,6 @@ class CommentList extends Component {
       isOpen
     } = this.props
     if (!isOpen) return null
-
     return (
       <div className="test__comment-list--body">
         {comments.length ? (
@@ -59,9 +63,11 @@ class CommentList extends Component {
   }
 
   get comments() {
-    return (
+    return this.props.loading ? (
+      <Loader />
+    ) : (
       <ul>
-        {this.props.article.comments.map((id) => (
+        {this.props.comments.map((id) => (
           <li key={id} className="test__comment-list--item">
             <Comment id={id} />
           </li>
@@ -71,4 +77,12 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+export default connect(
+  (state) => ({
+    comments: commentsIdsSelector(state),
+    loading: commentsLoadingSelector(state)
+  }),
+  {
+    fetchData: loadCommentsByArticleId
+  }
+)(toggleOpen(CommentList))
