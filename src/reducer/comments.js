@@ -1,19 +1,24 @@
-import { ADD_COMMENT, LOAD_COMMENTS, START, SUCCESS } from '../constants'
-import { normalizedComments } from '../fixtures'
+import {
+  ADD_COMMENT,
+  LOAD_ALL_COMMENTS,
+  LOAD_ARTICLE_COMMENTS,
+  SUCCESS,
+  START
+} from '../constants'
+import { Record, OrderedMap } from 'immutable'
 import { arrToMap } from './utils'
-import { Record } from 'immutable'
 
-const CommentsRecord = Record({
+const CommentRecord = Record({
   id: null,
-  user: null,
-  text: null
+  text: null,
+  user: null
 })
 
 const ReducerRecord = Record({
-  entities: arrToMap([], CommentsRecord),
+  entities: new OrderedMap({}),
+  total: null,
   loading: false,
-  loaded: false,
-  error: null
+  loaded: false
 })
 
 export default (state = new ReducerRecord(), action) => {
@@ -21,20 +26,26 @@ export default (state = new ReducerRecord(), action) => {
 
   switch (type) {
     case ADD_COMMENT:
-      console.log(state)
-      return state.setIn(['entities', randomId], {
-        ...payload.comment,
-        id: randomId
-      })
+      return state.setIn(
+        ['entities', randomId],
+        new CommentRecord({
+          ...payload.comment,
+          id: randomId
+        })
+      )
 
-    case LOAD_COMMENTS + START:
+    case LOAD_ARTICLE_COMMENTS + SUCCESS:
+      return state.mergeIn(['entities'], arrToMap(response, CommentRecord))
+
+    case LOAD_ALL_COMMENTS + START:
       return state.set('loading', true)
 
-    case LOAD_COMMENTS + SUCCESS:
+    case LOAD_ALL_COMMENTS + SUCCESS:
       return state
-        .set('entities', arrToMap(response, CommentsRecord))
+        .setIn(['entities'], arrToMap(response.records, CommentRecord))
+        .set('total', response.total)
         .set('loading', false)
-        .set('loaded', true)
+
     default:
       return state
   }

@@ -4,12 +4,13 @@ import {
   CHANGE_DATE_RANGE,
   CHANGE_SELECTION,
   ADD_COMMENT,
-  LOAD_COMMENTS,
   LOAD_ALL_ARTICLES,
   LOAD_ARTICLE,
+  LOAD_ARTICLE_COMMENTS,
+  LOAD_ALL_COMMENTS,
   SUCCESS,
-  START,
-  FAIL
+  FAIL,
+  START
 } from '../constants'
 
 export function increment() {
@@ -54,40 +55,6 @@ export function loadAllArticles() {
   }
 }
 
-/*
-export function loadArticleById(id) {
-  return {
-    type: LOAD_ARTICLE,
-    payload: { id },
-    callAPI: `/api/article/${id}`
-  }
-}
-*/
-export function loadComments(id) {
-  return (dispatch) => {
-    dispatch({
-      type: LOAD_COMMENTS + START,
-      payload: { id }
-    })
-    fetch(`/api/comment?article=${id}`)
-      .then((res) => res.json())
-      .then((response) =>
-        dispatch({
-          type: LOAD_COMMENTS + SUCCESS,
-          payload: { id },
-          response
-        })
-      )
-      .catch((error) =>
-        dispatch({
-          type: LOAD_COMMENTS + FAIL,
-          payload: { id },
-          error
-        })
-      )
-  }
-}
-
 export function loadArticleById(id) {
   return (dispatch) => {
     dispatch({
@@ -111,5 +78,21 @@ export function loadArticleById(id) {
           error
         })
       )
+  }
+}
+
+export function loadArticleComments(articleId) {
+  return {
+    type: LOAD_ARTICLE_COMMENTS,
+    payload: { articleId },
+    callAPI: `/api/comment?article=${articleId}`
+  }
+}
+
+export function loadAllComments(page) {
+  return {
+    type: LOAD_ALL_COMMENTS,
+    payload: { page },
+    callAPI: `/api/comment?limit=5&offset=${page}`
   }
 }
