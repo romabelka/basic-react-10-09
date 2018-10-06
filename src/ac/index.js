@@ -33,11 +33,10 @@ export function changeSelection(selected) {
   }
 }
 
-export function addComment(comment) {
+export function addComment(comment, articleId) {
   return {
     type: ADD_COMMENT,
-    payload: { comment },
-    idHave: true,
-    articleId: ''
+    payload: { comment, articleId },
+    idHave: true
   }
 }

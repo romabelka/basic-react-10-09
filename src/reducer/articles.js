@@ -10,7 +10,7 @@ const objArticles = normalizedArticles.reduce(
 )
 
 export default (articlesState = objArticles, action) => {
-  const { type, payload } = action
+  const { type, payload, articleId } = action
   console.log('values of payload', action)
 
   switch (type) {
@@ -21,6 +21,13 @@ export default (articlesState = objArticles, action) => {
 
     case ADD_COMMENT:
       const article = articlesState[payload.articleId]
+      return {
+        ...articlesState,
+        [payload.articleId]: {
+          ...article,
+          comments: (article.comments || []).concat(action.idComment)
+        }
+      }
 
     default:
       return articlesState
