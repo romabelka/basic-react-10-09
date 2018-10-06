@@ -7,7 +7,11 @@ import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
 import { loadCommentsByArticleId } from '../../ac'
 import { connect } from 'react-redux'
-import { commentsIdsSelector, commentsLoadingSelector } from '../../selectors'
+import {
+  commentsIdsSelector,
+  commentsLoadedSelector,
+  commentsLoadingSelector
+} from '../../selectors'
 import Loader from '../common/loader'
 
 class CommentList extends Component {
@@ -19,8 +23,11 @@ class CommentList extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { isOpen, comments } = this.props
-    if (!oldProps.isOpen && isOpen) {
+    const {
+      isOpen,
+      article: { commentsLoading, commentsLoaded }
+    } = this.props
+    if (!oldProps.isOpen && isOpen && !commentsLoading && !commentsLoaded) {
       this.props.fetchData(this.props.article.id)
     }
   }
@@ -63,7 +70,8 @@ class CommentList extends Component {
   }
 
   get comments() {
-    return this.props.loading ? (
+    const { commentsLoading, commentsLoaded } = this.props.article
+    return commentsLoading && !commentsLoaded ? (
       <Loader />
     ) : (
       <ul>
@@ -78,9 +86,10 @@ class CommentList extends Component {
 }
 
 export default connect(
-  (state) => ({
-    comments: commentsIdsSelector(state),
-    loading: commentsLoadingSelector(state)
+  (state, ownProps) => ({
+    comments: commentsIdsSelector(state, ownProps.article.id),
+    loading: commentsLoadingSelector(state),
+    loaded: commentsLoadedSelector(state)
   }),
   {
     fetchData: loadCommentsByArticleId

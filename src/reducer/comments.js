@@ -1,6 +1,6 @@
-import { ADD_COMMENT, LOAD_COMMENTS, START, SUCCESS } from '../constants'
+import { ADD_COMMENT, LOAD_COMMENTS, SUCCESS } from '../constants'
 import { arrToMap } from './utils'
-import { Record } from 'immutable'
+import { OrderedMap, Record } from 'immutable'
 
 const CommentRecord = Record({
   id: null,
@@ -8,13 +8,11 @@ const CommentRecord = Record({
   text: null
 })
 
-const ReducerRecord = Record({
-  entities: arrToMap([], CommentRecord),
-  loading: false
-  /*loaded: false*/
+const reducerRecord = new OrderedMap({
+  entities: arrToMap([], CommentRecord)
 })
 
-export default (state = new ReducerRecord(), action) => {
+export default (state = reducerRecord, action) => {
   const { type, payload, randomId } = action
 
   switch (type) {
@@ -24,13 +22,11 @@ export default (state = new ReducerRecord(), action) => {
         id: randomId
       })
 
-    case LOAD_COMMENTS + START:
-      return state.set('loading', true)
-
     case LOAD_COMMENTS + SUCCESS:
-      return state
-        .set('loading', false)
-        .set('entities', arrToMap(action.response, CommentRecord))
+      return state.mergeIn(
+        ['entities'],
+        arrToMap(action.response, CommentRecord)
+      )
 
     default:
       return state

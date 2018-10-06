@@ -2,10 +2,16 @@ import { createSelector } from 'reselect'
 
 export const articlesMapSelector = (state) => state.articles.entities
 export const articlesLoadingSelector = (state) => state.articles.loading
-export const commentsIdsSelector = (state) =>
-  state.comments.entities.keySeq().toArray()
-export const commentsSelector = (state) => state.comments.entities
-export const commentsLoadingSelector = (state) => state.comments.loading
+export const commentsIdsSelector = (state, articleId) => {
+  return articlesMapSelector(state)
+    .get(articleId)
+    .comments.filter((commentId) => {
+      return !!state.comments.get('entities').get(commentId)
+    })
+}
+export const commentsSelector = (state) => state.comments.get('entities')
+export const commentsLoadingSelector = (state) => state.comments.get('loading')
+export const commentsLoadedSelector = (state) => state.comments.get('loaded')
 export const dateRangeSelector = (state) => state.filters.dateRange
 export const selectedSelector = (state) => state.filters.selected
 
