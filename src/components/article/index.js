@@ -29,10 +29,10 @@ class Article extends PureComponent {
     })
   }
 
-  componentDidMount() {
-    const { article, id, loadArticleById } = this.props
-
+  static getDerivedStateFromProps(nextProps) {
+    const { article, id, loadArticleById } = nextProps
     if (!article || !article.text) loadArticleById(id)
+    return null
   }
 
   render() {

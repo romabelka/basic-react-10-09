@@ -7,6 +7,7 @@ import {
   LOAD_ALL_ARTICLES,
   LOAD_ARTICLE,
   LOAD_ARTICLE_COMMENTS,
+  LOAD_ALL_COMMENTS,
   SUCCESS,
   FAIL,
   START
@@ -51,6 +52,16 @@ export function loadAllArticles() {
   return {
     type: LOAD_ALL_ARTICLES,
     callAPI: '/api/article'
+  }
+}
+
+export function loadAllComments(limit = 5, offset = 0, page = 1) {
+  return {
+    type: LOAD_ALL_COMMENTS,
+    callAPI: `/api/comment?limit=${limit}&offset=${offset}`,
+    limit: limit,
+    offset: offset,
+    page: page
   }
 }
 
