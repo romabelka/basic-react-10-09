@@ -6,7 +6,7 @@ import { deleteArticle, loadArticleById } from '../../ac'
 import CommentList from '../comment-list'
 import './style.css'
 import Loader from '../common/loader'
-import { articleSelector } from '../../selectors'
+import {articleSelector, articlesLoadedSelector} from '../../selectors'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -14,6 +14,7 @@ class Article extends PureComponent {
       title: PropTypes.string.isRequired,
       text: PropTypes.string
     }),
+    loaded: PropTypes.bool,
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func
   }
@@ -30,9 +31,16 @@ class Article extends PureComponent {
   }
 
   componentDidMount() {
-    const { article, id, loadArticleById } = this.props
+    const { article, id, loadArticleById, loaded } = this.props
 
-    if (!article || !article.text) loadArticleById(id)
+    if ((!article || !article.text) && loaded) loadArticleById(id)
+  }
+
+  componentDidUpdate(oldProps) {
+    if (!oldProps.loaded && this.props.loaded) {
+        const { id, loadArticleById } = this.props
+        loadArticleById(id)
+    }
   }
 
   render() {
@@ -84,7 +92,8 @@ class Article extends PureComponent {
 
 export default connect(
   (state, props) => ({
-    article: articleSelector(state, props)
+    article: articleSelector(state, props),
+    loaded: articlesLoadedSelector(state)
   }),
   { deleteArticle, loadArticleById }
 )(Article)
