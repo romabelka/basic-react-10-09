@@ -1,56 +1,59 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Route, NavLink } from 'react-router-dom'
+import CommentsFullList from '../../components/comment-list-full'
 import { connect } from 'react-redux'
-import {
-  commentsSelector,
-  commentsLoadingSelector,
-  commentsLoadedSelector
-} from '../../selectors'
-import { loadAllComments } from '../../ac'
-import Comment from '../comment'
-import Loader from '../common/loader'
+import { commentsTotalSelector } from '../../selectors'
 
 class CommentsPage extends Component {
   static propTypes = {
-    comments: PropTypes.object,
-    loading: PropTypes.bool,
-    loaded: PropTypes.bool,
-    fetchData: PropTypes.func
+    total: PropTypes.number
+  }
+
+  state = {
+    limit: 5
+  }
+
+  pageCount = () => {
+    const { limit } = this.state
+    const { total } = this.props
+
+    return Math.ceil(total / limit)
   }
 
   render() {
-    const { comments, loading } = this.props
-
-    if (loading) return <Loader />
-    if (!comments.size) return <h3>No comments yet</h3>
-
-    return <div>{this.comments}</div>
-  }
-
-  get comments() {
     return (
-      <ul>
-        {this.props.comments.keySeq().map((id) => (
-          <li key={id}>
-            <Comment id={id} />
-          </li>
-        ))}
-      </ul>
+      <div>
+        <Route path="/comments/:page" children={this.getComments} exact />
+        <ul>{this.pagination}</ul>
+      </div>
     )
   }
 
-  componentDidMount() {
-    const { fetchData, loaded } = this.props
+  get pagination() {
+    return [...new Array(this.pageCount())].map((val, ind) => (
+      <li key={ind + 1}>
+        <NavLink to={`/comments/${ind + 1}`} activeStyle={{ color: 'green' }}>
+          Page {ind + 1}
+        </NavLink>
+      </li>
+    ))
+  }
 
-    if (!loaded) fetchData && fetchData()
+  getComments = ({ match }) => {
+    const { limit } = this.state
+    const offset = match ? (match.params.page - 1) * limit : 0
+
+    return (
+      <CommentsFullList
+        limit={limit}
+        offset={offset}
+        key={match ? match.params.page : 1}
+      />
+    )
   }
 }
 
-export default connect(
-  (state) => ({
-    comments: commentsSelector(state),
-    loading: commentsLoadingSelector(state),
-    loaded: commentsLoadedSelector(state)
-  }),
-  { fetchData: loadAllComments }
-)(CommentsPage)
+export default connect((state) => ({ total: commentsTotalSelector(state) }))(
+  CommentsPage
+)

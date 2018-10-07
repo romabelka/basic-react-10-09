@@ -19,7 +19,8 @@ const ReducerRecord = Record({
   entities: new OrderedMap({}),
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  total: 0
 })
 
 export default (state = new ReducerRecord(), action) => {
@@ -43,7 +44,8 @@ export default (state = new ReducerRecord(), action) => {
 
     case LOAD_ALL_COMMENTS + SUCCESS:
       return state
-        .mergeIn(['entities'], arrToMap(response.records, CommentRecord))
+        .setIn(['entities'], arrToMap(response.records, CommentRecord))
+        .set('total', response.total)
         .set('loading', false)
         .set('loaded', true)
 
