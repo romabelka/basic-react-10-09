@@ -46,7 +46,12 @@ export default (state = new ReducerRecord(), action) => {
 
     case LOAD_ALL_ARTICLES + SUCCESS:
       return state
-        .set('entities', arrToMap(response, ArticleRecord))
+        .update('entities', (entities) =>
+          entities.mergeWith((oldVal, newVal) => {
+            if (newVal.text !== null) return newVal
+            else return oldVal
+          }, arrToMap(response, ArticleRecord))
+        )
         .set('loading', false)
         .set('loaded', true)
 

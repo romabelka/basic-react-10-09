@@ -31,7 +31,7 @@ class Article extends PureComponent {
 
   componentDidMount() {
     const { article, id, loadArticleById } = this.props
-
+    console.log(article, id)
     if (!article || !article.text) loadArticleById(id)
   }
 
