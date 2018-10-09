@@ -7,6 +7,7 @@ import CommentList from '../comment-list'
 import './style.css'
 import Loader from '../common/loader'
 import { articleSelector } from '../../selectors'
+import localized from '../../lang'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -43,9 +44,9 @@ class Article extends PureComponent {
         <h3>
           {article.title}
           <button onClick={this.handleClick} className="test__article--btn">
-            {isOpen ? 'close' : 'open'}
+            {localized(isOpen ? 'close' : 'open')}
           </button>
-          <button onClick={this.handleDelete}>delete me</button>
+          <button onClick={this.handleDelete}>{localized('delete')}</button>
         </h3>
         <CSSTransition
           transitionName="article"

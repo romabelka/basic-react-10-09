@@ -9,6 +9,7 @@ import { loadArticleComments } from '../../ac'
 import './style.css'
 import Loader from '../common/loader'
 import { Consumer as UserConsumer } from '../../contexts/user'
+import localized from '../../lang'
 
 class CommentList extends Component {
   static propTypes = {
@@ -37,10 +38,16 @@ class CommentList extends Component {
 
   render() {
     const { isOpen, toggleOpen } = this.props
-    const text = isOpen ? 'hide comments' : 'show comments'
+    const text = localized(isOpen ? 'hideComments' : 'showComments')
     return (
       <div>
-        <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
+        <UserConsumer>
+          {(user) => (
+            <h3>
+              {localized('username')}: {user}
+            </h3>
+          )}
+        </UserConsumer>
         <button onClick={toggleOpen} className="test__comment-list--btn">
           {text}
         </button>
