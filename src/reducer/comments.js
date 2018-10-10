@@ -1,19 +1,23 @@
-import { ADD_COMMENT, LOAD_COMMENTS, START, SUCCESS } from '../constants'
-import { normalizedComments } from '../fixtures'
+import {
+  ADD_COMMENT,
+  LOAD_ARTICLE_COMMENTS,
+  LOAD_COMMENTS_FOR_PAGE,
+  START,
+  SUCCESS
+} from '../constants'
+import { Record, OrderedMap, Map } from 'immutable'
 import { arrToMap } from './utils'
-import { Record } from 'immutable'
 
-const CommentsRecord = Record({
+const CommentRecord = Record({
   id: null,
-  user: null,
-  text: null
+  text: null,
+  user: null
 })
 
 const ReducerRecord = Record({
-  entities: arrToMap([], CommentsRecord),
-  loading: false,
-  loaded: false,
-  error: null
+  entities: new OrderedMap({}),
+  pagination: new Map({}),
+  total: null
 })
 
 export default (state = new ReducerRecord(), action) => {
@@ -21,20 +25,30 @@ export default (state = new ReducerRecord(), action) => {
 
   switch (type) {
     case ADD_COMMENT:
-      console.log(state)
-      return state.setIn(['entities', randomId], {
-        ...payload.comment,
-        id: randomId
-      })
+      return state.setIn(
+        ['entities', randomId],
+        new CommentRecord({
+          ...payload.comment,
+          id: randomId
+        })
+      )
 
-    case LOAD_COMMENTS + START:
-      return state.set('loading', true)
+    case LOAD_ARTICLE_COMMENTS + SUCCESS:
+      return state.mergeIn(['entities'], arrToMap(response, CommentRecord))
 
-    case LOAD_COMMENTS + SUCCESS:
+    case LOAD_COMMENTS_FOR_PAGE + START:
+      return state.setIn(['pagination', payload.page, 'loading'], true)
+
+    case LOAD_COMMENTS_FOR_PAGE + SUCCESS:
       return state
-        .set('entities', arrToMap(response, CommentsRecord))
-        .set('loading', false)
-        .set('loaded', true)
+        .set('total', response.total)
+        .mergeIn(['entities'], arrToMap(response.records, CommentRecord))
+        .setIn(
+          ['pagination', payload.page, 'ids'],
+          response.records.map((comment) => comment.id)
+        )
+        .setIn(['pagination', payload.page, 'loading'], false)
+
     default:
       return state
   }

@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
+import { connect } from 'react-redux'
 import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
+import { loadArticleComments } from '../../ac'
 import './style.css'
-import { connect } from 'react-redux'
-import { loadComments } from '../../ac'
-import {
-  commentsLoadingSelector,
-  commentsLoadedSelector,
-  commentsErrorSelector
-} from '../../selectors'
 import Loader from '../common/loader'
+import { Consumer as UserConsumer } from '../../contexts/user'
 
 class CommentList extends Component {
   static propTypes = {
@@ -23,15 +19,20 @@ class CommentList extends Component {
   }
 
   /*
-    static defaultProps = {
-      comments: []
-    }
-  */
-
+  static defaultProps = {
+    comments: []
+  }
+*/
   componentDidUpdate(oldProps) {
-    const { isOpen, article, loadComments } = this.props
-    if (!oldProps.isOpen && isOpen && !this.props.loaded)
-      loadComments(article.id)
+    const { isOpen, article, loadArticleComments } = this.props
+    if (
+      isOpen &&
+      !oldProps.isOpen &&
+      !article.commentsLoading &&
+      !article.commentsLoaded
+    ) {
+      loadArticleComments(article.id)
+    }
   }
 
   render() {
@@ -39,6 +40,7 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
+        <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
         <button onClick={toggleOpen} className="test__comment-list--btn">
           {text}
         </button>
@@ -55,12 +57,12 @@ class CommentList extends Component {
 
   getBody() {
     const {
-      article: { comments = [], id },
+      article: { comments, id, commentsLoading, commentsLoaded },
       isOpen
     } = this.props
-
-    if (!isOpen || (!this.props.loading && !this.props.loaded)) return null
-    if (this.props.loading) return <Loader />
+    if (!isOpen) return null
+    if (commentsLoading) return <Loader />
+    if (!commentsLoaded) return null
 
     return (
       <div className="test__comment-list--body">
@@ -87,14 +89,7 @@ class CommentList extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    loading: commentsLoadingSelector(state),
-    loaded: commentsLoadedSelector(state, ownProps),
-    error: commentsErrorSelector(state)
-  }
-}
 export default connect(
-  mapStateToProps,
-  { loadComments }
+  null,
+  { loadArticleComments }
 )(toggleOpen(CommentList))
