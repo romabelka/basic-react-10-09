@@ -15,7 +15,7 @@ import {
 
 class Comments extends Component {
   static propTypes = {
-    comments: PropTypes.object,
+    comments: PropTypes.array,
     page: PropTypes.string,
     total: PropTypes.number,
     loading: PropTypes.bool,

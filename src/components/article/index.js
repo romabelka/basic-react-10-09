@@ -11,7 +11,7 @@ import { articleSelector } from '../../selectors'
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      title: PropTypes.string,
       text: PropTypes.string
     }),
     isOpen: PropTypes.bool,
@@ -31,7 +31,6 @@ class Article extends PureComponent {
 
   componentDidMount() {
     const { article, id, loadArticleById } = this.props
-    console.log(article, id)
     if (!article || !article.text) loadArticleById(id)
   }
 

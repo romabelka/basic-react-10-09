@@ -16,7 +16,7 @@ const CommentRecord = Record({
 })
 
 const PageRecord = Record({
-  ids: {},
+  ids: [],
   loading: null,
   loaded: null,
   error: null
@@ -52,7 +52,7 @@ export default (state = new ReducerRecord(), action) => {
 
     case LOAD_COMMENTS_PAGE + SUCCESS:
       const comments = arrToMap(response.records, CommentRecord)
-      const ids = comments.keySeq()
+      const ids = [...comments.keys()]
       return state
         .mergeIn(['entities'], comments)
         .setIn(['pages', payload.page, 'ids'], ids)
