@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ArticleList from '../article-list'
 import { Route } from 'react-router-dom'
 import Article from '../article'
+import { Consumer as LanguageConsumer } from '../../contexts/glossary'
 
 class ArticlesPage extends Component {
   static propTypes = {}
@@ -18,7 +19,12 @@ class ArticlesPage extends Component {
 
   getArticle = ({ match }) => {
     console.log('---', 'article match: ', match)
-    if (!match) return <h1>Select an Article</h1>
+    if (!match)
+      return (
+        <LanguageConsumer>
+          {(glossary) => <h1>{glossary.selectArticle}</h1>}
+        </LanguageConsumer>
+      )
 
     return <Article id={match.params.id} isOpen key={match.params.id} />
   }

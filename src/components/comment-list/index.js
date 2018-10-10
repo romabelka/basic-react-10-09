@@ -9,6 +9,7 @@ import { loadArticleComments } from '../../ac'
 import './style.css'
 import Loader from '../common/loader'
 import { Consumer as UserConsumer } from '../../contexts/user'
+import { Consumer as LanguageConsumer } from '../../contexts/glossary'
 
 class CommentList extends Component {
   static propTypes = {
@@ -37,13 +38,28 @@ class CommentList extends Component {
 
   render() {
     const { isOpen, toggleOpen } = this.props
-    const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
+        <UserConsumer>
+          {(user) => (
+            <h3>
+              <LanguageConsumer>
+                {(glossary) => glossary.username}
+              </LanguageConsumer>
+              : {user}
+            </h3>
+          )}
+        </UserConsumer>
         <button onClick={toggleOpen} className="test__comment-list--btn">
-          {text}
+          <LanguageConsumer>
+            {(glossary) =>
+              isOpen
+                ? glossary.buttonClose + ' ' + glossary.comments
+                : glossary.buttonOpen + ' ' + glossary.comments
+            }
+          </LanguageConsumer>
         </button>
+
         <CSSTransition
           transitionName="comments"
           transitionEnterTimeout={500}
@@ -69,7 +85,13 @@ class CommentList extends Component {
         {comments.length ? (
           this.comments
         ) : (
-          <h3 className="test__comment-list--empty">No comments yet</h3>
+          <LanguageConsumer>
+            {(glossary) => (
+              <h3 className="test__comment-list--empty">
+                {glossary.noComments}
+              </h3>
+            )}
+          </LanguageConsumer>
         )}
         <CommentForm articleId={id} />
       </div>

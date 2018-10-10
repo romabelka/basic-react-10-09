@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import { Consumer as LanguageConsumer } from '../../contexts/glossary'
 
 class MenuItem extends Component {
   render() {
@@ -7,7 +8,9 @@ class MenuItem extends Component {
     return (
       <div>
         <NavLink to={path} activeStyle={{ color: 'red' }}>
-          {children}
+          <LanguageConsumer>
+            {(glossary) => glossary[children]}
+          </LanguageConsumer>
         </NavLink>
       </div>
     )

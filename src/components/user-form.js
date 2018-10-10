@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { Consumer as LanguageConsumer } from '../contexts/glossary'
 
 class UserForm extends Component {
   render() {
     return (
       <div>
-        Username:
+        <LanguageConsumer>{(glossary) => glossary.username}</LanguageConsumer>:
         <input value={this.props.value} onChange={this.handleUserChange} />
       </div>
     )
