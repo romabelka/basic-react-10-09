@@ -7,6 +7,7 @@ import CommentList from '../comment-list'
 import './style.css'
 import Loader from '../common/loader'
 import { articleSelector } from '../../selectors'
+import { Consumer as LocalConsumer } from '../../contexts/local'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -40,13 +41,17 @@ class Article extends PureComponent {
     if (!article) return null
     return (
       <div>
-        <h3>
-          {article.title}
-          <button onClick={this.handleClick} className="test__article--btn">
-            {isOpen ? 'close' : 'open'}
-          </button>
-          <button onClick={this.handleDelete}>delete me</button>
-        </h3>
+        <LocalConsumer>
+          {(local) => (
+            <h3>
+              {article.title}
+              <button onClick={this.handleClick} className="test__article--btn">
+                {isOpen ? local.close : local.open}
+              </button>
+              <button onClick={this.handleDelete}>{local.delete}</button>
+            </h3>
+          )}
+        </LocalConsumer>
         <CSSTransition
           transitionName="article"
           transitionAppear

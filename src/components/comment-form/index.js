@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addComment } from '../../ac'
 import './style.css'
+import { Consumer as LocalConsumer } from '../../contexts/local'
 
 class CommentForm extends Component {
   static propTypes = {}
@@ -13,21 +14,29 @@ class CommentForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        user:{' '}
-        <input
-          value={this.state.user}
-          onChange={this.handleChange('user')}
-          className={this.getClassName('user')}
-        />
-        comment:{' '}
-        <input
-          value={this.state.text}
-          onChange={this.handleChange('text')}
-          className={this.getClassName('text')}
-        />
-        <input type="submit" value="submit" disabled={!this.isValidForm()} />
-      </form>
+      <LocalConsumer>
+        {(local) => (
+          <form onSubmit={this.handleSubmit}>
+            {local.user}:{' '}
+            <input
+              value={this.state.user}
+              onChange={this.handleChange('user')}
+              className={this.getClassName('user')}
+            />
+            {local.comment}:{' '}
+            <input
+              value={this.state.text}
+              onChange={this.handleChange('text')}
+              className={this.getClassName('text')}
+            />
+            <input
+              type="submit"
+              value={local.submit}
+              disabled={!this.isValidForm()}
+            />
+          </form>
+        )}
+      </LocalConsumer>
     )
   }
 

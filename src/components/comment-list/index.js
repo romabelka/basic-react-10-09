@@ -9,6 +9,7 @@ import { loadArticleComments } from '../../ac'
 import './style.css'
 import Loader from '../common/loader'
 import { Consumer as UserConsumer } from '../../contexts/user'
+import { Consumer as LocalConsumer } from '../../contexts/local'
 
 class CommentList extends Component {
   static propTypes = {
@@ -37,25 +38,35 @@ class CommentList extends Component {
 
   render() {
     const { isOpen, toggleOpen } = this.props
-    const text = isOpen ? 'hide comments' : 'show comments'
+
     return (
-      <div>
-        <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
-        <button onClick={toggleOpen} className="test__comment-list--btn">
-          {text}
-        </button>
-        <CSSTransition
-          transitionName="comments"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-        >
-          {this.getBody()}
-        </CSSTransition>
-      </div>
+      <LocalConsumer>
+        {(local) => (
+          <div>
+            <UserConsumer>
+              {(user) => (
+                <h3>
+                  {local.username}: {user}
+                </h3>
+              )}
+            </UserConsumer>
+            <button onClick={toggleOpen} className="test__comment-list--btn">
+              {isOpen ? local.hideComments : local.showComments}
+            </button>
+            <CSSTransition
+              transitionName="comments"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}
+            >
+              {this.getBody(local)}
+            </CSSTransition>
+          </div>
+        )}
+      </LocalConsumer>
     )
   }
 
-  getBody() {
+  getBody(local) {
     const {
       article: { comments, id, commentsLoading, commentsLoaded },
       isOpen
@@ -69,7 +80,7 @@ class CommentList extends Component {
         {comments.length ? (
           this.comments
         ) : (
-          <h3 className="test__comment-list--empty">No comments yet</h3>
+          <h3 className="test__comment-list--empty">{local.noComments}</h3>
         )}
         <CommentForm articleId={id} />
       </div>
