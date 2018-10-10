@@ -7,6 +7,7 @@ import CommentList from '../comment-list'
 import './style.css'
 import Loader from '../common/loader'
 import { articleSelector } from '../../selectors'
+import { Consumer as LanguageConsumer } from '../../contexts/glossary'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -42,10 +43,20 @@ class Article extends PureComponent {
       <div>
         <h3>
           {article.title}
-          <button onClick={this.handleClick} className="test__article--btn">
-            {isOpen ? 'close' : 'open'}
-          </button>
-          <button onClick={this.handleDelete}>delete me</button>
+          <LanguageConsumer>
+            {(glossary) => (
+              <button onClick={this.handleClick} className="test__article--btn">
+                {isOpen ? glossary.buttonClose : glossary.buttonOpen}
+              </button>
+            )}
+          </LanguageConsumer>
+          <LanguageConsumer>
+            {(glossary) => (
+              <button onClick={this.handleDelete}>
+                {glossary.buttonDelete}
+              </button>
+            )}
+          </LanguageConsumer>
         </h3>
         <CSSTransition
           transitionName="article"
