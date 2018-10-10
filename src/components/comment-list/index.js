@@ -9,6 +9,7 @@ import { loadArticleComments } from '../../ac'
 import './style.css'
 import Loader from '../common/loader'
 import { Consumer as UserConsumer } from '../../contexts/user'
+import { LocalizationLanguage } from '../../contexts/localization'
 
 class CommentList extends Component {
   static propTypes = {
@@ -41,9 +42,15 @@ class CommentList extends Component {
     return (
       <div>
         <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
-        <button onClick={toggleOpen} className="test__comment-list--btn">
-          {text}
-        </button>
+        <LocalizationLanguage.Consumer>
+          {(language) => (
+            <button onClick={toggleOpen} className="test__comment-list--btn">
+              {this.props.isOpen
+                ? language.buttonHideComments
+                : language.buttonShowComments}
+            </button>
+          )}
+        </LocalizationLanguage.Consumer>
         <CSSTransition
           transitionName="comments"
           transitionEnterTimeout={500}
