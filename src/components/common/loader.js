@@ -1,7 +1,12 @@
 import React from 'react'
+import { LocalizationLanguage } from '../../contexts/localization'
 
 function Loader() {
-  return <h2>Loading...</h2>
+  return (
+    <LocalizationLanguage.Consumer>
+      {(language) => <h2>{language.loadingText}</h2>}
+    </LocalizationLanguage.Consumer>
+  )
 }
 
 Loader.propTypes = {}

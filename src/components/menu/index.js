@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import MenuItem from './menu-item'
+import { LocalizationLanguage } from '../../contexts/localization'
 
 class Menu extends Component {
   render() {
     return (
       <div>
-        <h3>Main Menu</h3>
+        <LocalizationLanguage.Consumer>
+          {(language) => <h3>{language.menuTitle}</h3>}
+        </LocalizationLanguage.Consumer>
         {this.props.children}
       </div>
     )
