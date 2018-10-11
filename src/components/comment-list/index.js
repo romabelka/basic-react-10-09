@@ -5,6 +5,8 @@ import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import './style.css'
+import { connect } from 'react-redux'
+import { loadComments } from '../../ac'
 
 class CommentList extends Component {
   static propTypes = {
@@ -15,9 +17,9 @@ class CommentList extends Component {
   }
 
   /*
-  static defaultProps = {
-    comments: []
-  }
+	static defaultProps = {
+		comments: []
+	}
 */
 
   render() {
@@ -71,4 +73,7 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList)
+export default connect(
+  null,
+  { loadComments }
+)(toggleOpen(CommentList))
