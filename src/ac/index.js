@@ -54,10 +54,11 @@ export function loadAllArticles() {
   }
 }
 
-export function loadComments() {
+export function loadComments(articleId) {
   return {
     type: LOAD_COMMENTS,
-    callApiComment: '/api/comment'
+    callApiComment: `/api/comment?article=${articleId}`,
+    payload: { articleId }
   }
 }
 

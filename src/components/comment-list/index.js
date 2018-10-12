@@ -71,6 +71,13 @@ class CommentList extends Component {
       </ul>
     )
   }
+  componentDidUpdate(oldProps) {
+    const {
+      loadComments,
+      article: { id }
+    } = this.props
+    loadComments(id)
+  }
 }
 
 export default connect(

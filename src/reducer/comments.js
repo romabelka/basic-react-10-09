@@ -1,20 +1,38 @@
 import { ADD_COMMENT, LOAD_COMMENTS } from '../constants'
-import { normalizedComments } from '../fixtures'
+//import { normalizedComments } from '../fixtures'
 import { arrToMap } from './utils'
+import { Record, OrderedMap } from 'immutable'
 
-export default (state = arrToMap(normalizedComments), action) => {
-  const { type, payload, randomId } = action
+const CommentRecord = Record({
+  id: null,
+  user: null,
+  text: null
+})
+
+const ReduserCommentRecord = Record({
+  entities: new OrderedMap({}),
+  loading: false
+})
+
+export default (commentState = new ReduserCommentRecord(), action) => {
+  const { type, payload, randomId, response } = action
 
   switch (type) {
     case ADD_COMMENT:
-      return state.set(randomId, {
-        ...payload.comment,
-        id: randomId
-      })
+      return commentState.setIn(
+        ['entities', randomId],
+        new CommentRecord({
+          ...payload.comment,
+          id: randomId
+        })
+      )
     case LOAD_COMMENTS:
-      return console.log('test-test')
+      return commentState.mergeIn(
+        ['entities'],
+        arrToMap(response, CommentRecord)
+      )
 
     default:
-      return state
+      return commentState
   }
 }
