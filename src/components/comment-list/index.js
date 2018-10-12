@@ -43,7 +43,7 @@ class CommentList extends Component {
 
   getBody() {
     const {
-      article: { comments = [], id },
+      article: { comments, id },
       isOpen
     } = this.props
     if (!isOpen) return null

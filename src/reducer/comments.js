@@ -10,7 +10,7 @@ const CommentRecord = Record({
 })
 
 const ReduserCommentRecord = Record({
-  entities: new OrderedMap({}),
+  entities: arrToMap([], CommentRecord),
   loading: false
 })
 
