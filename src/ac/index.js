@@ -9,7 +9,10 @@ import {
   LOAD_ARTICLE_COMMENTS,
   SUCCESS,
   FAIL,
-  START
+  START,
+  LOAD_COMMENTS_PAGE,
+  COMMENTS_PAGE_LIMIT,
+  UPDATE_COMMENTS_PAGE
 } from '../constants'
 
 export function increment() {
@@ -85,5 +88,22 @@ export function loadArticleComments(articleId) {
     type: LOAD_ARTICLE_COMMENTS,
     payload: { articleId },
     callAPI: `/api/comment?article=${articleId}`
+  }
+}
+
+export function loadCommentsPage(page) {
+  const limit = COMMENTS_PAGE_LIMIT
+  const offset = (page - 1) * limit
+  return {
+    type: LOAD_COMMENTS_PAGE,
+    payload: { page },
+    callAPI: `/api/comment?limit=${limit}&offset=${offset}`
+  }
+}
+
+export function updateCommentsPage(page) {
+  return {
+    type: UPDATE_COMMENTS_PAGE,
+    payload: { page }
   }
 }

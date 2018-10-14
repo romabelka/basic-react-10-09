@@ -1,8 +1,22 @@
 import { createSelector } from 'reselect'
+import { COMMENTS_PAGE_LIMIT } from '../constants'
 
 export const articlesMapSelector = (state) => state.articles.entities
 export const articlesLoadingSelector = (state) => state.articles.loading
-export const commentsSelector = (state) => state.comments.entities
+
+export const commentsTotalSelector = (state) => state.comments.total
+export const commentsPageSelector = (state) => state.comments.page
+export const commentsEntitiesSelector = (state) => state.comments.entities
+export const commentsSelector = (state) => {
+  const page = commentsPageSelector(state)
+  const entities = commentsEntitiesSelector(state)
+  if (!page) return entities
+  const limit = COMMENTS_PAGE_LIMIT
+  const offset = (page - 1) * limit
+  const res = entities.slice(offset, offset + limit)
+  return res.filter((val) => typeof val !== 'undefined')
+}
+
 export const dateRangeSelector = (state) => state.filters.dateRange
 export const selectedSelector = (state) => state.filters.selected
 
@@ -41,5 +55,5 @@ export const filtratedArticles = createSelector(
 export const createCommentSelector = () =>
   createSelector(commentsSelector, idSelector, (comments, id) => {
     console.log('---', 'comment selector', id)
-    return comments.get(id)
+    return comments.kvmap.get(id)
   })
